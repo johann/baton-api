@@ -1,10 +1,20 @@
 class ApplicationController < ActionController::API
   respond_to :json
+  # before_action :underscore_params!
+  before_action :configure_permitted_parameters, if: :devise_controller?
+  before_action :authenticate_user
+
+
+  private
+
+  def authenticate_user!(options = {})
+    head :unauthorized unless signed_in?
+  end
 
   def authenticate_user
     if request.headers['Authorization'].present?
       authenticate_or_request_with_http_token do |token|
-        begin 
+        begin
           jwt_payload = JWT.decode(token, Rails.application.secrets.secret_key_base).first
           @current_user_id = jwt_payload['id']
         rescue JWT::ExpiredSignature, JWT::VerificationError, JWT::DecodeError
@@ -14,8 +24,8 @@ class ApplicationController < ActionController::API
     end
   end
 
-  def authenticate_user!(options = {})
-    head :unauthorized unless signed_in?
+  def configure_permitted_parameters
+    devise_parameter_sanitizer.permit(:sign_up, keys: [:username])
   end
 
   def current_user
@@ -25,4 +35,9 @@ class ApplicationController < ActionController::API
   def signed_in?
     @current_user_id.present?
   end
+
+
+  # def underscore_params!
+  #   params.deep_transform_keys!(&:underscore)
+  # end
 end
