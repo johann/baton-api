@@ -1,0 +1,1 @@
+json.(group, :name, :description, :lat, :long, :photo_url)
