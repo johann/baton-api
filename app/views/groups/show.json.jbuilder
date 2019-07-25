@@ -1,1 +1,1 @@
-json.(group, :name, :description, :lat, :long, :photo_url)
+json.partial! "groups/group", group: @group
