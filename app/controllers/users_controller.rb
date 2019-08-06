@@ -1,4 +1,4 @@
-class UsersController < ApplicationController
+class UsersController < ApiController
   before_action :authenticate_user!
 
   def show 

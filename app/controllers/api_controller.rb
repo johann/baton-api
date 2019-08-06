@@ -1,12 +1,11 @@
-class ApplicationController < ActionController::API
+class ApiController < ActionController::API
   include ActionController::HttpAuthentication::Token::ControllerMethods
-  respond_to :json, :html
-  # before_action :underscore_params!
+  respond_to :json
+
   before_action :configure_permitted_parameters, if: :devise_controller?
   before_action :authenticate_user
 
-
-  private
+  private 
 
   def authenticate_user!(options = {})
     head :unauthorized unless signed_in?
@@ -36,7 +35,4 @@ class ApplicationController < ActionController::API
   def signed_in?
     @current_user_id.present?
   end
-  # def underscore_params!
-  #   params.deep_transform_keys!(&:underscore)
-  # end
 end
