@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :activity_sessions
+  resources :activity_categories
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
   # resources :clients
