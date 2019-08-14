@@ -1,5 +1,6 @@
 class MembershipsController < ApiController
   before_action :set_membership, only: [:show, :delete]
+
   def index
     @memberships = Memberships.find_by(user_id: current_user.id)
   end

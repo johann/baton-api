@@ -9,7 +9,14 @@ Rails.application.routes.draw do
     devise_for :users, controllers: { sessions: :sessions }, 
                         path_names: { sign_in: :login }
     resource :user, only: [:show, :update]
-    resources :memberships
     resources :groups
+
+    namespace :coach do
+      resources :activity_categories
+    end
+
+    namespace :user do
+      resources :groups, only: [:create, :destroy]
+    end
   end
 end

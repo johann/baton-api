@@ -1,11 +1,12 @@
 class ApplicationController < ActionController::Base
   include ActionController::HttpAuthentication::Token::ControllerMethods
+  include ActionController::RequestForgeryProtection
+  protect_from_forgery with: :exception, unless: -> { request.format.json? }
   respond_to :json, :html
   # before_action :underscore_params!
   before_action :configure_permitted_parameters, if: :devise_controller?
   before_action :authenticate_user
   include ActionView::Layouts
-
 
   private
 
