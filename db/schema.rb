@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_08_12_010336) do
+ActiveRecord::Schema.define(version: 2019_08_14_015621) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -34,6 +34,12 @@ ActiveRecord::Schema.define(version: 2019_08_12_010336) do
     t.string "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.decimal "lat"
+    t.decimal "long"
+    t.string "photo_url"
+    t.string "additional_info"
+    t.bigint "group_id"
+    t.index ["group_id"], name: "index_activity_categories_on_group_id"
   end
 
   create_table "activity_sessions", force: :cascade do |t|
@@ -103,6 +109,7 @@ ActiveRecord::Schema.define(version: 2019_08_12_010336) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "activity_categories", "groups"
   add_foreign_key "activity_sessions", "activity_categories"
   add_foreign_key "groups", "users"
   add_foreign_key "memberships", "groups"

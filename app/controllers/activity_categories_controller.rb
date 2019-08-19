@@ -1,2 +1,0 @@
-class ActivityCategoriesController < ApplicationController
-end
