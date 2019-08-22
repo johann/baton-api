@@ -1,5 +1,6 @@
 class ActivitiesController < ApiController
   before_action :set_activity, only: [:show, :update, :destroy]
+  before_action :authenticate_coach, only: [:create, :update, :destroy]
 
   def index
     @activities = Activity.where(group_id: params[:group_id])
