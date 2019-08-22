@@ -1,4 +1,4 @@
-class Coach::ActivityCategoriesController < ApplicationController
+class ActivityCategoriesController < ApplicationController
   before_action :set_activity_category, only: [:show, :update, :destroy]
 
   def index
