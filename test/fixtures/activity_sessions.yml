@@ -1,0 +1,9 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  activity: one
+  time: 2019-08-26 21:44:59
+
+two:
+  activity: two
+  time: 2019-08-26 21:44:59

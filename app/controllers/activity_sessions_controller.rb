@@ -1,0 +1,2 @@
+class ActivitySessionsController < ApplicationController
+end
