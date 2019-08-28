@@ -19,7 +19,12 @@ Rails.application.routes.draw do
 
     namespace :user do
       resources :groups, only: [:index, :create, :destroy]
-      resources :activities, only: [:index]
+      resources :activities, only: [:index] do
+        resources :activity_sessions do
+          post "/attendance", to: "attendance#create"
+          destroy "attendance", to: "attendance#destroy"
+        end
+      end
     end
   end
 end
