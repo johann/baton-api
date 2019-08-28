@@ -22,7 +22,7 @@ Rails.application.routes.draw do
       resources :activities, only: [:index] do
         resources :activity_sessions do
           post "/attendance", to: "attendance#create"
-          destroy "attendance", to: "attendance#destroy"
+          delete "attendance", to: "attendance#destroy"
         end
       end
     end
