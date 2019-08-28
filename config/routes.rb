@@ -1,6 +1,4 @@
 Rails.application.routes.draw do
-  resources :attendances
-  resources :activity_sessions
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
   # resources :clients
@@ -12,13 +10,16 @@ Rails.application.routes.draw do
     # resources :groups
 
     resources :groups do
-      resources :activities
+      resources :activities do
+        resources :activity_sessions
+      end
     end
 
     # resources :activity_sessions
 
     namespace :user do
       resources :groups, only: [:index, :create, :destroy]
+      resources :activities, only: [:index]
     end
   end
 end

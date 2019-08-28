@@ -1,8 +1,6 @@
 class User::GroupsController < ApiController
-
   def index
-    memberships = Membership.where(user_id: current_user.id)
-    @groups = memberships.map { |m| m.group }
+    @groups = current_user.groups
   end
 
   def create
@@ -18,6 +16,4 @@ class User::GroupsController < ApiController
     @membership = Membership.find_by(user_id: current_user.id, group_id: params[:id])
     @membership.destroy
   end
-
-  private
 end
