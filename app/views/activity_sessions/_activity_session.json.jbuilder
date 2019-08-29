@@ -1,1 +1,0 @@
-json.extract! activity_session, :id, :time

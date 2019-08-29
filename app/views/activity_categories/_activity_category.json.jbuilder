@@ -1,1 +1,0 @@
-json.extract! activity_category, :id, :title, :description, :lat, :long, :photo_url, :additional_info, :created_at, :updated_at

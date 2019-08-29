@@ -8,6 +8,7 @@ class ActivitiesController < ApiController
   
   def create
     @activity = Activity.new(activity_params)
+    @activity.group_id = params[:group_id]
     if @activity.save
       render json: @activity
     else

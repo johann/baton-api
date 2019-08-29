@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_08_28_022114) do
+ActiveRecord::Schema.define(version: 2019_08_29_043724) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -42,14 +42,6 @@ ActiveRecord::Schema.define(version: 2019_08_28_022114) do
     t.index ["group_id"], name: "index_activities_on_group_id"
   end
 
-  create_table "activity_sessions", force: :cascade do |t|
-    t.bigint "activity_id"
-    t.datetime "time"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["activity_id"], name: "index_activity_sessions_on_activity_id"
-  end
-
   create_table "admin_users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -63,11 +55,11 @@ ActiveRecord::Schema.define(version: 2019_08_28_022114) do
   end
 
   create_table "attendances", force: :cascade do |t|
+    t.bigint "activity_id"
     t.bigint "user_id"
-    t.bigint "activity_session_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["activity_session_id"], name: "index_attendances_on_activity_session_id"
+    t.index ["activity_id"], name: "index_attendances_on_activity_id"
     t.index ["user_id"], name: "index_attendances_on_user_id"
   end
 
@@ -121,8 +113,7 @@ ActiveRecord::Schema.define(version: 2019_08_28_022114) do
   end
 
   add_foreign_key "activities", "groups"
-  add_foreign_key "activity_sessions", "activities"
-  add_foreign_key "attendances", "activity_sessions"
+  add_foreign_key "attendances", "activities"
   add_foreign_key "attendances", "users"
   add_foreign_key "groups", "users"
   add_foreign_key "memberships", "groups"
