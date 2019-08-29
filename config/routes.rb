@@ -11,8 +11,7 @@ Rails.application.routes.draw do
 
     resources :groups do
       resources :activities do
-        resources :activity_sessions
-      end
+            end
     end
 
     # resources :activity_sessions
