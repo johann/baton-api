@@ -25,7 +25,7 @@ class ApiController < ActionController::API
   end
 
   def authenticate_coach
-    current_user.coach?
+    head :unathorized unless current_user.coach?
   end
 
   def configure_permitted_parameters

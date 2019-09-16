@@ -13,6 +13,7 @@ class User::ActivitiesController < ApiController
   end
 
   def destroy
+    byebug
     @attendance = Attendance.find_by(user_id: current_user.id, activity_id: params[:id])
     @attendance.destroy
   end

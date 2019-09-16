@@ -9,6 +9,9 @@ class User < ApplicationRecord
   has_many :activities, through: :attendances
   has_many :memberships
   has_many :groups, through: :memberships
+  has_many :coach_groups, :foreign_key => "user_id", :class_name => "Group"
+
+
 
   def generate_jwt
     JWT.encode({ id: id,
