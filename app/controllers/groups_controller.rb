@@ -1,26 +1,30 @@
 class GroupsController < ApiController
-  before_action :set_group, only: [:show]
+  before_action :set_group, only: [:show, :members]
 
-  def index 
+  def index
     @groups = Group.all
-  end 
+  end
 
   def create
     @group = Group.new(group_params)
-    if @group.save 
+    if @group.save
       render :show, status: :created, location: @group
-    else 
+    else
       render json: @group.errors, status: :unprocessable_entity
-    end 
+    end
   end
 
   def show
   end
 
-  private 
+  def members
+    @users = @group.users
+  end
+
+  private
 
   def set_group
-    @group = Group.find(params[:id])
+    @group = Group.find(params[:group_id])
   end
 
   def group_params

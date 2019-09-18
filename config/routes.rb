@@ -8,12 +8,13 @@ Rails.application.routes.draw do
     devise_for :users, controllers: { sessions: :sessions },
                         path_names: { sign_in: :login }
     resource :user, only: [:show, :update]
-    resources :groups
+    get "users/:username", to: "users#username"
 
     resources :groups do
       resources :activities do
         get "/attendance", to: "attendances#show"
       end
+      get "/members", to: "groups#members"
     end
 
     # resources :activity_sessions
@@ -21,7 +22,7 @@ Rails.application.routes.draw do
       resources :groups
     end
 
-    namespace :user do
+  namespace :user do
       resources :groups, only: [:index, :create, :destroy]
       resources :activities
     end

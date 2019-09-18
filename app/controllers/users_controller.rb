@@ -1,7 +1,7 @@
 class UsersController < ApiController
   before_action :authenticate_user!
 
-  def show 
+  def show
   end
 
   def update
@@ -10,6 +10,11 @@ class UsersController < ApiController
     else
       render json: { errors: current_user.errors }, status: :unprocessable_entity
     end
+  end
+
+  def username
+    @user = User.find_by(username: params[:username])
+    render :show
   end
 
   private
