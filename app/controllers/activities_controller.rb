@@ -5,7 +5,7 @@ class ActivitiesController < ApiController
   def index
     @activities = Activity.where(group_id: params[:group_id])
   end
-  
+
   def create
     @activity = Activity.new(activity_params)
     @activity.group_id = params[:group_id]
@@ -25,19 +25,19 @@ class ActivitiesController < ApiController
     else
       render json: @activity.errors, status: :unprocessable_entity
     end
-  end 
+  end
 
   def destroy
     @activity.destroy
   end
 
-  private 
+  private
 
   def set_activity
     @activity = Activity.find(params[:id])
   end
 
   def activity_params
-    params.require(:activity).permit(:title, :description, :lat, :long, :photo_url, :additional_info, :group_id)
+    params.require(:activity).permit(:title, :description, :lat, :long, :photo_url, :additional_info, :date, :group_id)
   end
 end

@@ -7,13 +7,12 @@ class User::ActivitiesController < ApiController
     @attendance = Attendance.new(user_id: current_user.id, activity_id: params[:activity_id])
     if @attendance.save
       render json: @attendance, status: :created
-    else 
+    else
       render json: @attendance.errors, status: :unprocessable_entity
-    end 
+    end
   end
 
   def destroy
-    byebug
     @attendance = Attendance.find_by(user_id: current_user.id, activity_id: params[:id])
     @attendance.destroy
   end
