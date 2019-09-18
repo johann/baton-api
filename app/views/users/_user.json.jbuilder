@@ -1,3 +1,2 @@
-json.(user, :id, :email, :username)
-json.token user.generate_jwt
+json.(user, :id, :email, :username, :bio, :image)
 json.coach user.coach?
