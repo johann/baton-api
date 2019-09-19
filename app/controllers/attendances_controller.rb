@@ -2,7 +2,7 @@ class AttendancesController < ApplicationController
   before_action :group, :set_activity
 
   def show
-    @users = @activity.users.filter { |u| u.id != current_user }
+    @users = @activity.users.filter { |u| u.id != current_user }.uniq
   end
 
   private
