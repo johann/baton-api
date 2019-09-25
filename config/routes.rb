@@ -22,7 +22,15 @@ Rails.application.routes.draw do
       resources :groups
     end
 
-  namespace :user do
+    resources :users, param: :username do
+      member do
+        resources :groups, controller: "users/groups"
+        resources :activities, controller: "user/activities"
+      end
+    end
+
+
+    namespace :user do
       resources :groups, only: [:index, :create, :destroy]
       resources :activities
     end
