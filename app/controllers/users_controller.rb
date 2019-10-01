@@ -6,6 +6,9 @@ class UsersController < ApiController
 
   def update
     if current_user.update_attributes(user_params)
+      if params[:photo]
+        current_user.profile_photo.attach(params[:photo])
+      end
       render :show
     else
       render json: { errors: current_user.errors }, status: :unprocessable_entity
