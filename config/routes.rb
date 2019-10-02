@@ -8,7 +8,7 @@ Rails.application.routes.draw do
     devise_for :users, controllers: { sessions: :sessions },
                         path_names: { sign_in: :login }
     resource :user, only: [:show, :update]
-    get "users/:username", to: "users#username"
+    get "users/:username", to: "users#username", as: :user_username
 
     resources :groups do
       resources :activities do
