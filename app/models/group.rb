@@ -4,4 +4,8 @@ class Group < ApplicationRecord
   has_many :memberships
   has_many :users, through: :memberships
   has_one_attached :photo
+
+  def has_member?(user)
+    users.exists?(user.id)
+  end
 end
