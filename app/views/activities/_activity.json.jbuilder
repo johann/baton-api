@@ -7,3 +7,6 @@ end
 json.members activity.users.limit(5).map do |user|
   json.partial! 'users/user', locals: { user: user }
 end
+json.coach do
+  json.partial! 'users/user', user: activity.group.coach
+end
