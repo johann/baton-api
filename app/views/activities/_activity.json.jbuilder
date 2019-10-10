@@ -4,3 +4,6 @@ if activity.photo.attached?
 else
   json.photo nil
 end
+json.members activity.users.map do |user|
+  json.partial! 'users/user', locals: { user: user }
+end
