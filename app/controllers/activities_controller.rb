@@ -16,9 +16,6 @@ class ActivitiesController < ApiController
     @activity = Activity.new(activity_params)
     @activity.group_id = params[:group_id]
     if @activity.save
-      if params[:photo]
-        @activity.profile_picture.attach(params[:photo])
-      end
       render json: @activity
     else
       render json: @activity.errors, status: :unprocessable_entity
@@ -47,6 +44,6 @@ class ActivitiesController < ApiController
   end
 
   def activity_params
-    params.require(:activity).permit(:title, :description, :lat, :long, :location, :photo_url, :additional_info, :start_date, :end_date, :group_id)
+    params.require(:activity).permit(:title, :description, :lat, :long, :location, :photo_url, :additional_info, :start_date, :end_date, :group_id, :profile_picture)
   end
 end

@@ -1,4 +1,4 @@
-json.(user, :id, :email, :username, :bio, :image)
+json.(user, :id, :email, :username, :bio)
 json.token user.generate_jwt
 json.coach user.coach?
 if user.profile_picture.attached?

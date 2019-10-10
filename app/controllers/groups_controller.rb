@@ -8,9 +8,6 @@ class GroupsController < ApiController
   def create
     @group = Group.new(group_params)
     if @group.save
-      if params[:photo]
-        @group.profile_picture.attach(params[:photo])
-      end
       render :show, status: :created, location: @group
     else
       render json: @group.errors, status: :unprocessable_entity
@@ -31,6 +28,6 @@ class GroupsController < ApiController
   end
 
   def group_params
-    params.require(:group).permit(:name, :description, :lat, :long, :photo_url, :user_id)
+    params.require(:group).permit(:name, :description, :lat, :long, :photo_url, :user_id, profile_picture)
   end
 end
