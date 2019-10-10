@@ -5,4 +5,4 @@ if group.photo.attached?
 else
   json.photo nil
 end
-json.is_member group.has_member?(@current_user)
+json.is_member group.has_member?(current_user)
