@@ -7,7 +7,7 @@ if group.photo.attached?
 else
   json.photo nil
 end
-json.members group.users.map do |user|
+json.members group.users.limit(5).map do |user|
   json.partial! 'users/user', locals: { user: user }
 end
 json.is_member group.has_member?(current_user)
