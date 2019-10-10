@@ -3,5 +3,5 @@ class Group < ApplicationRecord
   has_many :activities
   has_many :memberships
   has_many :users, through: :memberships
-  has_one_attached :profile_picture
+  has_one_attached :photo
 end
