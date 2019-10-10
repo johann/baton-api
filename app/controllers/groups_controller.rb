@@ -1,5 +1,5 @@
 class GroupsController < ApiController
-  before_action :set_group, only: [:show, :members]
+  before_action :set_group, only: [:show, :members, :update]
 
   def index
     @groups = Group.all
@@ -11,6 +11,14 @@ class GroupsController < ApiController
       render :show, status: :created, location: @group
     else
       render json: @group.errors, status: :unprocessable_entity
+    end
+  end
+
+  def update
+    if @group.update_attributes(group_params)
+      render :show
+    else
+      render json: { errors: @group.errors }, status: :unprocessable_entity
     end
   end
 
