@@ -5,6 +5,7 @@ FactoryBot.define do
     email 'johann@baton.com'
     bio 'a good dev'
     username 'johann'
+    password 'password1@'
 
     trait :coach do
       coach true

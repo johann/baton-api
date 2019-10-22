@@ -50,3 +50,4 @@ gem 'jwt'
 gem 'activeadmin'
 gem "nokogiri", ">= 1.10.4"
 gem "aws-sdk-s3", require: false
+gem 'rswag'
