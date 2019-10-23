@@ -27,7 +27,7 @@ Rails.application.routes.draw do
     resources :users, param: :username do
       member do
         resources :groups, controller: "users/groups"
-        resources :activities, controller: "user/activities"
+        resources :activities, controller: "users/activities"
       end
     end
 
