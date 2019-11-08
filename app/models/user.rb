@@ -1,6 +1,7 @@
 class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
+  include ActiveStorageSupport::SupportForBase64
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
@@ -10,7 +11,9 @@ class User < ApplicationRecord
   has_many :memberships
   has_many :groups, through: :memberships
   has_many :coach_groups, :foreign_key => "user_id", :class_name => "Group"
-  has_one_attached :photo
+  # has_one_attached :photo
+  has_one_base64_attached :photo
+
 
   def generate_jwt
     JWT.encode({ id: id,
