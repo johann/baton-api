@@ -35,6 +35,10 @@ group :development, :test, :production do
   gem 'factory_bot_rails',  '4.8.2'
 end
 
+group :development, :test do
+  gem 'faker', :require => false
+end
+
 group :development do
   gem 'listen', '>= 3.0.5', '< 3.2'
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring

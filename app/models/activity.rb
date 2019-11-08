@@ -5,4 +5,5 @@ class Activity < ApplicationRecord
 
   has_one_attached :photo
   default_scope { order(start_date: :desc) }
+  enum intensity: [:leisure, :fitness, :competitiveness]
 end

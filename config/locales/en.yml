@@ -31,3 +31,6 @@
 
 en:
   hello: "Hello world"
+  faker:
+    team:
+      first_name: "johann"

@@ -5,6 +5,224 @@
     "version": "v1"
   },
   "paths": {
+    "/api/groups": {
+      "get": {
+        "summary": "Get all the groups",
+        "tags": [
+          "Groups"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "groups found",
+            "schema": {
+              "type": "array",
+              "items": {
+                "properties": {
+                  "id": {
+                    "type": "integer",
+                    "example": 20
+                  },
+                  "lat": {
+                    "type": "string",
+                    "example": "johann@baton.com"
+                  },
+                  "long": {
+                    "type": "string",
+                    "example": "johann"
+                  },
+                  "coach": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "integer",
+                        "example": 20
+                      },
+                      "email": {
+                        "type": "string",
+                        "example": "johann@baton.com"
+                      },
+                      "username": {
+                        "type": "string",
+                        "example": "johann"
+                      },
+                      "bio": {
+                        "type": "string",
+                        "example": "running forever"
+                      },
+                      "coach": {
+                        "type": "boolean"
+                      },
+                      "photo": {
+                        "type": "string",
+                        "example": "http://www.example.com",
+                        "x-nullable": true
+                      }
+                    }
+                  },
+                  "description": {
+                    "type": "string",
+                    "example": "cool group"
+                  },
+                  "photo": {
+                    "type": "string",
+                    "example": "http://www.example.com",
+                    "x-nullable": true
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/groups/{id}": {
+      "get": {
+        "summary": "Get a group",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Group found",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "integer",
+                  "example": 20
+                },
+                "lat": {
+                  "type": "string",
+                  "example": "johann@baton.com"
+                },
+                "long": {
+                  "type": "string",
+                  "example": "johann"
+                },
+                "coach": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "example": 20
+                    },
+                    "email": {
+                      "type": "string",
+                      "example": "johann@baton.com"
+                    },
+                    "username": {
+                      "type": "string",
+                      "example": "johann"
+                    },
+                    "bio": {
+                      "type": "string",
+                      "example": "running forever"
+                    },
+                    "coach": {
+                      "type": "boolean"
+                    },
+                    "photo": {
+                      "type": "string",
+                      "example": "http://www.example.com",
+                      "x-nullable": true
+                    }
+                  }
+                },
+                "description": {
+                  "type": "string",
+                  "example": "cool group"
+                },
+                "photo": {
+                  "type": "string",
+                  "example": "http://www.example.com",
+                  "x-nullable": true
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/groups/{id}/members": {
+      "get": {
+        "summary": "Get a groups list of members",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Group Members found",
+            "schema": {
+              "type": "array",
+              "items": {
+                "properties": {
+                  "id": {
+                    "type": "integer",
+                    "example": 20
+                  },
+                  "email": {
+                    "type": "string",
+                    "example": "johann@baton.com"
+                  },
+                  "username": {
+                    "type": "string",
+                    "example": "johann"
+                  },
+                  "bio": {
+                    "type": "string",
+                    "example": "running forever"
+                  },
+                  "coach": {
+                    "type": "boolean"
+                  },
+                  "photo": {
+                    "type": "string",
+                    "example": "http://www.example.com",
+                    "x-nullable": true
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/users/{username}": {
       "get": {
         "summary": "Get a users profile username",

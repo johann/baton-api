@@ -1,5 +1,5 @@
 class GroupsController < ApiController
-  before_action :set_group, only: [:show, :members, :update]
+  before_action :set_group, only: [:show, :update]
 
   def index
     @groups = Group.all
@@ -26,6 +26,7 @@ class GroupsController < ApiController
   end
 
   def members
+    @group = Group.find(params[:group_id])
     @users = @group.users
   end
 

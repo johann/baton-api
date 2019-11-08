@@ -1,4 +1,4 @@
-json.extract! activity, :id, :title, :description, :lat, :long, :location, :additional_info, :start_date, :end_date, :created_at, :updated_at, :distance
+json.extract! activity, :id, :title, :description, :lat, :long, :location, :additional_info, :start_date, :end_date, :created_at, :updated_at, :distance, :intensity
 if activity.photo.attached?
   json.photo activity.photo.service_url
 else
