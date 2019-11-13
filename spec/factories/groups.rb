@@ -5,6 +5,7 @@ FactoryBot.define do
     name 'runners'
     lat 10.342
     long -13.234
+    location 'Lower East Side'
     description 'run run everywhere'
 
     trait :with_user do

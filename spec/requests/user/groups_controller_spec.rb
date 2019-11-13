@@ -19,6 +19,7 @@ describe 'Group', type: :request do
     id: { type: :integer, example: 20 },
     lat: { type: :string, example: '23.2324' },
     long: { type: :string, example: '-12.234' },
+    location: { type: :string, example: 'West Hollywood' },
     coach: { type: :object, properties: user_schema },
     photo: { type: :string, example: 'http://www.example.com', 'x-nullable': true }
   }

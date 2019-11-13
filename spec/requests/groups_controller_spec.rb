@@ -18,6 +18,7 @@ describe "Group", type: :request do
     id: { type: :integer, example: 20 },
     lat: { type: :string, example: 'johann@baton.com' },
     long: { type: :string, example: 'johann' },
+    location: { type: :string, example: 'West Hollywood' },
     coach: { type: :object, properties: user_schema },
     description: { type: :string, example: "cool group" },
     photo: { type: :string, example: 'http://www.example.com', 'x-nullable': true }
