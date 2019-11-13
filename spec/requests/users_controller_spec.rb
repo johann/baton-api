@@ -2,7 +2,6 @@
 
 require 'rails_helper'
 require 'swagger_helper'
-require 'byebug'
 
 describe "User", type: :request do
 

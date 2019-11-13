@@ -3,7 +3,7 @@ class Group < ApplicationRecord
   has_many :activities
   has_many :memberships
   has_many :users, through: :memberships
-  has_one_attached :photo
+  has_one_base64_attached :photo
 
   def has_member?(user)
     users.exists?(user.id)

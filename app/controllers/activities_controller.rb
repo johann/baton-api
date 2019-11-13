@@ -16,6 +16,9 @@ class ActivitiesController < ApiController
     @activity = Activity.new(activity_params)
     @activity.group_id = params[:group_id]
     if @activity.save
+      if params[:activity][:photo].present?
+        @activity.photo.attach(data: params[:activity][:photo])
+      end
       render json: @activity
     else
       render json: @activity.errors, status: :unprocessable_entity
@@ -27,6 +30,9 @@ class ActivitiesController < ApiController
 
   def update
     if @activity.update(activity_params)
+      if params[:activity][:photo].present?
+        @activity.photo.attach(data: params[:activity][:photo])
+      end
       render json: @activity
     else
       render json: @activity.errors, status: :unprocessable_entity
