@@ -40,6 +40,10 @@
                     "type": "string",
                     "example": "johann"
                   },
+                  "location": {
+                    "type": "string",
+                    "example": "West Hollywood"
+                  },
                   "coach": {
                     "type": "object",
                     "properties": {
@@ -124,6 +128,160 @@
                 "long": {
                   "type": "string",
                   "example": "johann"
+                },
+                "location": {
+                  "type": "string",
+                  "example": "West Hollywood"
+                },
+                "coach": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "example": 20
+                    },
+                    "email": {
+                      "type": "string",
+                      "example": "johann@baton.com"
+                    },
+                    "username": {
+                      "type": "string",
+                      "example": "johann"
+                    },
+                    "bio": {
+                      "type": "string",
+                      "example": "running forever"
+                    },
+                    "coach": {
+                      "type": "boolean"
+                    },
+                    "photo": {
+                      "type": "string",
+                      "example": "http://www.example.com",
+                      "x-nullable": true
+                    }
+                  }
+                },
+                "description": {
+                  "type": "string",
+                  "example": "cool group"
+                },
+                "photo": {
+                  "type": "string",
+                  "example": "http://www.example.com",
+                  "x-nullable": true
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "summary": "Update a group",
+        "tags": [
+          "Groups"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "type": "string",
+            "required": true
+          },
+          {
+            "name": "group_data",
+            "in": "body",
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "integer",
+                "example": 20
+              },
+              "lat": {
+                "type": "string",
+                "example": "johann@baton.com"
+              },
+              "long": {
+                "type": "string",
+                "example": "johann"
+              },
+              "location": {
+                "type": "string",
+                "example": "West Hollywood"
+              },
+              "coach": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "integer",
+                    "example": 20
+                  },
+                  "email": {
+                    "type": "string",
+                    "example": "johann@baton.com"
+                  },
+                  "username": {
+                    "type": "string",
+                    "example": "johann"
+                  },
+                  "bio": {
+                    "type": "string",
+                    "example": "running forever"
+                  },
+                  "coach": {
+                    "type": "boolean"
+                  },
+                  "photo": {
+                    "type": "string",
+                    "example": "http://www.example.com",
+                    "x-nullable": true
+                  }
+                }
+              },
+              "description": {
+                "type": "string",
+                "example": "cool group"
+              },
+              "photo": {
+                "type": "string",
+                "example": "http://www.example.com",
+                "x-nullable": true
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Group Updated",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "integer",
+                  "example": 20
+                },
+                "lat": {
+                  "type": "string",
+                  "example": "johann@baton.com"
+                },
+                "long": {
+                  "type": "string",
+                  "example": "johann"
+                },
+                "location": {
+                  "type": "string",
+                  "example": "West Hollywood"
                 },
                 "coach": {
                   "type": "object",
@@ -264,6 +422,10 @@
                     "type": "string",
                     "example": "-12.234"
                   },
+                  "location": {
+                    "type": "string",
+                    "example": "West Hollywood"
+                  },
                   "coach": {
                     "type": "object",
                     "properties": {
@@ -337,6 +499,10 @@
               "long": {
                 "type": "string",
                 "example": "-12.234"
+              },
+              "location": {
+                "type": "string",
+                "example": "West Hollywood"
               },
               "coach": {
                 "type": "object",
@@ -448,6 +614,10 @@
                   "long": {
                     "type": "string",
                     "example": "-12.234"
+                  },
+                  "location": {
+                    "type": "string",
+                    "example": "West Hollywood"
                   },
                   "coach": {
                     "type": "object",

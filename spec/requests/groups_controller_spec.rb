@@ -61,6 +61,34 @@ describe "Group", type: :request do
     end
   end
 
+  path '/api/groups/{id}' do
+    patch 'Update a group' do
+      tags 'Groups'
+      produces 'application/json'
+      consumes 'application/json'
+      parameter name: 'Authorization', in: :header, type: :string
+      parameter name: :id, in: :path, type: :string
+      parameter name: :group_data,
+                in: :body,
+                type: :object,
+                properties: group_schema
+      response '200', 'Group Updated' do
+        schema type: :object, properties: group_schema
+        let!(:user) { create(:user, username: "blarf") }
+        let!(:group) { create(:group, :with_user, coach: user) }
+        let!(:id) { group.id }
+        let!(:Authorization) { "Bearer #{user.generate_jwt}" }
+        let!(:group_data) do
+          { group: {
+            location: 'Lower East Side'
+          } }
+        end
+
+        run_test!
+      end
+    end
+  end
+
   path '/api/groups/{id}/members' do
     get 'Get a groups list of members' do
       tags 'Groups'
