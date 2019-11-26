@@ -535,6 +535,90 @@
         }
       }
     },
+    "/api/groups/discover": {
+      "get": {
+        "summary": "Get all the groups",
+        "tags": [
+          "Groups"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "groups found",
+            "schema": {
+              "type": "array",
+              "items": {
+                "properties": {
+                  "id": {
+                    "type": "integer",
+                    "example": 20
+                  },
+                  "lat": {
+                    "type": "string",
+                    "example": "johann@baton.com"
+                  },
+                  "long": {
+                    "type": "string",
+                    "example": "johann"
+                  },
+                  "location": {
+                    "type": "string",
+                    "example": "West Hollywood"
+                  },
+                  "coach": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "integer",
+                        "example": 20
+                      },
+                      "email": {
+                        "type": "string",
+                        "example": "johann@baton.com"
+                      },
+                      "username": {
+                        "type": "string",
+                        "example": "johann"
+                      },
+                      "bio": {
+                        "type": "string",
+                        "example": "running forever"
+                      },
+                      "coach": {
+                        "type": "boolean"
+                      },
+                      "photo": {
+                        "type": "string",
+                        "example": "http://www.example.com",
+                        "x-nullable": true
+                      }
+                    }
+                  },
+                  "description": {
+                    "type": "string",
+                    "example": "cool group"
+                  },
+                  "photo": {
+                    "type": "string",
+                    "example": "http://www.example.com",
+                    "x-nullable": true
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/groups/{id}": {
       "get": {
         "summary": "Get a group",

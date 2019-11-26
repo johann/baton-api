@@ -13,6 +13,7 @@ Rails.application.routes.draw do
     get "users/:username", to: "users#username", as: :user_username
 
     get "activities/discover", to: "activities#discover"
+    get "groups/discover", to: "groups#discover"
 
     resources :groups do
       resources :activities do

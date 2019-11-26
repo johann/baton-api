@@ -43,6 +43,22 @@ describe "Group", type: :request do
     end
   end
 
+  # TODO: Improve this test to check for user
+  path '/api/groups/discover' do
+    get 'Get all the groups' do
+      tags 'Groups'
+      produces 'application/json'
+      parameter name: 'Authorization', in: :header, type: :string
+      response '200', 'groups found' do
+        schema type: :array, items: { properties: group_schema }
+        let!(:user) { create(:user) }
+        let!(:group) { create(:group, coach: user) }
+        let!(:Authorization) { "Bearer #{user.generate_jwt}" }
+        run_test!
+      end
+    end
+  end
+
   path '/api/groups/{id}' do
     get 'Get a group' do
       tags 'Groups'
