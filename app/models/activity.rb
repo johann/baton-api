@@ -1,4 +1,5 @@
 class Activity < ApplicationRecord
+  include ActiveStorageSupport::SupportForBase64
   belongs_to :group
   has_many :attendances
   has_many :users, through: :attendances

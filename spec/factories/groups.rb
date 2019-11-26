@@ -13,14 +13,7 @@ FactoryBot.define do
         group.users << create(:user)
       end
     end
+
+    association :coach, factory: :user
   end
 end
-
-# t.text "name"
-# t.text "description"
-# t.decimal "lat"
-# t.decimal "long"
-# t.bigint "user_id"
-# t.datetime "created_at", null: false
-# t.datetime "updated_at", null: false
-# t.index ["user_id"], name: "inde

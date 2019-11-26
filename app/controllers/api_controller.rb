@@ -5,7 +5,7 @@ class ApiController < ActionController::API
   before_action :configure_permitted_parameters, if: :devise_controller?
   before_action :authenticate_user
 
-  private 
+  private
 
   def authenticate_user!(options = {})
     head :unauthorized unless signed_in?

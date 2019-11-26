@@ -50,6 +50,6 @@ class ActivitiesController < ApiController
   end
 
   def activity_params
-    params.require(:activity).permit(:title, :description, :lat, :long, :location, :photo, :additional_info, :start_date, :end_date, :group_id, :distance)
+    params.require(:activity).permit(:title, :description, :lat, :long, :location, :additional_info, :start_date, :end_date, :group_id, :distance)
   end
 end
