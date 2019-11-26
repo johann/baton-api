@@ -61,6 +61,22 @@ describe "Group", type: :request do
     end
   end
 
+  path '/api/activities/discover' do
+    get 'Get all the Activities youre not in' do
+      tags 'Activities'
+      produces 'application/json'
+      parameter name: 'Authorization', in: :header, type: :string
+      response '200', 'Activities found' do
+        schema type: :array, items: { properties: activity_schema }
+        let!(:user) { create(:user) }
+        let!(:group) { create(:group, coach: user) }
+        let!(:id) { group.id }
+        let!(:Authorization) { "Bearer #{user.generate_jwt}" }
+        run_test!
+      end
+    end
+  end
+
   path '/api/groups/{id}/activities' do
     post 'Create a new activity' do
       tags 'Activities'

@@ -12,6 +12,8 @@ Rails.application.routes.draw do
     resource :user, only: [:show, :update]
     get "users/:username", to: "users#username", as: :user_username
 
+    get "activities/discover", to: "activities#discover"
+
     resources :groups do
       resources :activities do
         get "/attendance", to: "attendances#show"
@@ -19,7 +21,6 @@ Rails.application.routes.draw do
       get "/members", to: "groups#members"
     end
 
-    # resources :activity_sessions
     namespace :coach do
       resources :groups
     end

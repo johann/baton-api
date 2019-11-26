@@ -12,6 +12,10 @@ class ActivitiesController < ApiController
     end
   end
 
+  def discover
+    @activities = Attendance.where.not(user_id: current_user.id).select(:activity_id).distinct.map { |a| a.activity }
+  end
+
   def create
     @activity = Activity.new(activity_params)
     @activity.group_id = params[:group_id]

@@ -227,6 +227,84 @@
         }
       }
     },
+    "/api/activities/discover": {
+      "get": {
+        "summary": "Get all the Activities youre not in",
+        "tags": [
+          "Activities"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Activities found",
+            "schema": {
+              "type": "array",
+              "items": {
+                "properties": {
+                  "id": {
+                    "type": "integer",
+                    "example": 20
+                  },
+                  "lat": {
+                    "type": "string",
+                    "example": "johann@baton.com",
+                    "x-nullable": true
+                  },
+                  "long": {
+                    "type": "string",
+                    "example": "johann",
+                    "x-nullable": true
+                  },
+                  "additional_info": {
+                    "type": "string",
+                    "example": "johann",
+                    "x-nullable": true
+                  },
+                  "location": {
+                    "type": "string",
+                    "example": "West Hollywood",
+                    "x-nullable": true
+                  },
+                  "start_date": {
+                    "type": "string",
+                    "example": "West Hollywood",
+                    "x-nullable": true
+                  },
+                  "end_date": {
+                    "type": "string",
+                    "example": "West Hollywood",
+                    "x-nullable": true
+                  },
+                  "group_id": {
+                    "type": "integer",
+                    "example": 20
+                  },
+                  "description": {
+                    "type": "string",
+                    "example": "cool group",
+                    "x-nullable": true
+                  },
+                  "title": {
+                    "type": "string",
+                    "example": "http://www.example.com",
+                    "x-nullable": true
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/groups/{id}/activities/{activity_id}": {
       "patch": {
         "summary": "Update an activity",
