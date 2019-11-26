@@ -537,7 +537,7 @@
     },
     "/api/groups/discover": {
       "get": {
-        "summary": "Get all the groups",
+        "summary": "Get all the groups youre not in",
         "tags": [
           "Groups"
         ],

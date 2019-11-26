@@ -45,7 +45,7 @@ describe "Group", type: :request do
 
   # TODO: Improve this test to check for user
   path '/api/groups/discover' do
-    get 'Get all the groups' do
+    get 'Get all the groups youre not in' do
       tags 'Groups'
       produces 'application/json'
       parameter name: 'Authorization', in: :header, type: :string
