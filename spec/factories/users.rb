@@ -7,6 +7,7 @@ FactoryBot.define do
     bio 'a good dev'
     username { Faker::Name.unique.first_name }
     password 'password1@'
+    full_name 'johann kerr'
 
     trait :coach do
       coach true
