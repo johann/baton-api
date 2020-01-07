@@ -10,4 +10,4 @@ end
 json.members group.users.limit(5).map do |user|
   json.partial! 'users/user', locals: { user: user }
 end
-json.is_member group.has_member?(current_user)
+json.is_member group.member?(current_user)

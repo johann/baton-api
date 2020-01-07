@@ -10,4 +10,4 @@ end
 json.coach do
   json.partial! 'users/user', user: activity.group.coach
 end
-json.is_attending activity.has_member?(current_user)
+json.is_attending activity.member?(current_user)
