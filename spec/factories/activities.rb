@@ -10,6 +10,12 @@ FactoryBot.define do
     start_date '10am'
     end_date '11am'
 
+    trait :with_user do
+      after(:create) do |activity|
+        activity.users << create(:user)
+      end
+    end
+
     association :group, factory: :group
   end
 end

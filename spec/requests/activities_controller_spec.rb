@@ -70,9 +70,12 @@ describe "Group", type: :request do
         schema type: :array, items: { properties: activity_schema }
         let!(:user) { create(:user) }
         let!(:group) { create(:group, coach: user) }
+        let!(:activity) { create(:activity, :with_user, group: group) }
         let!(:id) { group.id }
         let!(:Authorization) { "Bearer #{user.generate_jwt}" }
-        run_test!
+        run_test! do |response|
+          expect(activity.users.include?(user)).to be(false)
+        end
       end
     end
   end
