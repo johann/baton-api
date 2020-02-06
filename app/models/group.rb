@@ -9,4 +9,8 @@ class Group < ApplicationRecord
   def member?(user)
     users.exists?(user.id)
   end
+
+  def placeholder
+    # TODO: - add placehodler image
+  end
 end

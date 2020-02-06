@@ -3,9 +3,9 @@ json.coach do
   json.partial! 'users/user', user: group.coach
 end
 if group.photo.attached?
-  json.photo group.photo.service_url
+  json.photo group.photo.service_url.sub(/\?.*/, '')
 else
-  json.photo nil
+  json.photo group.placeholder
 end
 json.members group.users.limit(5).map do |user|
   json.partial! 'users/user', locals: { user: user }

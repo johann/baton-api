@@ -20,4 +20,8 @@ class User < ApplicationRecord
                   exp: 60.days.from_now.to_i },
                   ENV["SECRET_KEY_BASE"])
   end
+
+  def placeholder
+    # TODO: - add placehodler image
+  end
 end
