@@ -11,6 +11,6 @@ class Group < ApplicationRecord
   end
 
   def placeholder
-    # TODO: - add placehodler image
+    "https://batonapprunner.s3.amazonaws.com/group-and-activity-image-placeholder.png"
   end
 end
