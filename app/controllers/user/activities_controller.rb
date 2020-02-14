@@ -4,6 +4,7 @@ class User::ActivitiesController < ApiController
   end
 
   def create
+    head(:bad_request) && return unless current_user.activities.exclude?(Activity.find(params[:activity_id]))
     @attendance = Attendance.new(user_id: current_user.id, activity_id: params[:activity_id])
     if @attendance.save
       render json: @attendance, status: :created
