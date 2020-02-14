@@ -37,7 +37,8 @@ class GroupsController < ApiController
   end
 
   def discover
-    @groups = Membership.where.not(user_id: current_user.id).select(:group_id).distinct.map { |m| m.group }
+    user_groups = current_user.groups.map(&:id)
+    @groups = Group.where.not(id: user_groups)
   end
 
   private

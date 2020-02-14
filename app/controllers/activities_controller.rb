@@ -13,7 +13,8 @@ class ActivitiesController < ApiController
   end
 
   def discover
-    @activities = Attendance.where.not(user_id: current_user.id).select(:activity_id).distinct.map { |a| a.activity }
+    user_activities = current_user.activities.map(&:id)
+    @activities = Activities.where.not(id: user_activities)
   end
 
   def create
