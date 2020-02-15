@@ -16,7 +16,7 @@ class ActivitiesController < ApiController
     user_activities = current_user.activities.map(&:id)
     coach_activities = current_user.coach_groups.map {|group| group.activities }.flatten.map(&:id)
     activities = user_activities + coach_activities
-    @activities = Activity.where.not(id: activities)
+    @activities = Activity.where.not(id: activities).where(start_date: Date.today..6.months.from_now)
   end
 
   def create
