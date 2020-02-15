@@ -14,7 +14,9 @@ class ActivitiesController < ApiController
 
   def discover
     user_activities = current_user.activities.map(&:id)
-    @activities = Activity.where.not(id: user_activities)
+    coach_activities = current_user.coach_groups.map {|group| group.activities }.flatten.map(&:id)
+    activities = user_activities + coach_activities
+    @activities = Activity.where.not(id: activities)
   end
 
   def create
