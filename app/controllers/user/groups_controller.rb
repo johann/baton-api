@@ -4,7 +4,7 @@ class User::GroupsController < ApiController
   end
 
   def create
-    head(:bad_request) && return unless current_user.groups.exclude?(Membership.find(params[:group_id]))
+    head(:bad_request) && return unless current_user.groups.exclude?(Group.find(params[:group_id]))
     @membership = Membership.new(user_id: current_user.id, group_id: params[:group_id])
     if @membership.save
       head :ok
