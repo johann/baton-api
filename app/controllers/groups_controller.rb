@@ -37,8 +37,9 @@ class GroupsController < ApiController
   end
 
   def discover
-    user_groups = current_user.groups.map(&:id)
-    @groups = Group.where.not(id: user_groups)
+    user_groups = current_user.groups.map(&:id) + current_user.coach_groups.map(&:id)
+
+    @groups = Group.where.not(id: user_groups.uniq)
   end
 
   private
