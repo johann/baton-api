@@ -11,6 +11,7 @@ Rails.application.routes.draw do
                         path_names: { sign_in: :login }
     resource :user, only: [:show, :update]
     get "users/:username", to: "users#username", as: :user_username
+    post "users/facebook", to: "users#facebook"
 
     get "activities/discover", to: "activities#discover"
     get "groups/discover", to: "groups#discover"

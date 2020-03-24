@@ -15,6 +15,10 @@ class UsersController < ApiController
     end
   end
 
+  def facebook
+
+  end
+
   def username
     @user = User.find_by(username: params[:username])
     render :show
