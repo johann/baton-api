@@ -6,7 +6,7 @@ class ActivitiesController < ApiController
     if params[:scope] == "past"
       @activities = Activity.where(group_id: params[:group_id], start_date: 6.months.ago..1.day.ago).order(:start_date)
     elsif params[:scope] == "future"
-      @activities = Activity.where(group_id: params[:group_id], start_date: Date.today..6.months.from_now).order(:start_date)
+      @activities = Activity.where(group_id: params[:group_id], start_date: Date.today..12.months.from_now).order(:start_date)
     else
       @activities = Activity.where(group_id: params[:group_id])
     end
@@ -16,7 +16,7 @@ class ActivitiesController < ApiController
     user_activities = current_user.activities.map(&:id)
     coach_activities = current_user.coach_groups.map {|group| group.activities }.flatten.map(&:id)
     activities = user_activities + coach_activities
-    @activities = Activity.where.not(id: activities).where(start_date: Date.today..12.months.from_now).order(start_date: :desc)
+    @activities = Activity.where.not(id: activities).where(start_date: Date.today..12.months.from_now).order(:start_date)
   end
 
   def create
