@@ -1,6 +1,6 @@
 class User::ActivitiesController < ApiController
   def index
-    @activities = current_user.activities
+    @activities = current_user.activities.order(:start_date)
   end
 
   def create
