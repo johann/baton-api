@@ -5,6 +5,8 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
+  attr_accessor :skip_password_validation
+
   validates :username, uniqueness: { case_sensitive: false }, presence: true, allow_blank: false, format: { with: /\A[a-zA-Z0-9]+\z/ }
   has_many :attendances
   has_many :activities, -> { distinct }, through: :attendances
@@ -24,4 +26,10 @@ class User < ApplicationRecord
   def placeholder
     "https://batonapprunner.s3.amazonaws.com/profile-image-placeholder.png"
   end
+
+  def password_required?
+    return false if skip_password_validation
+    super
+  end
+
 end
