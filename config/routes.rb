@@ -34,10 +34,13 @@ Rails.application.routes.draw do
       end
     end
 
-
     namespace :user do
       resources :groups, only: [:index, :create, :destroy]
       resources :activities
     end
+  end
+
+  namespace :share do
+    resources :activities, only: [:show]
   end
 end
