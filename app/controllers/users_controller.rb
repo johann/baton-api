@@ -36,7 +36,7 @@ class UsersController < ApiController
   private
 
   def facebook_params
-    params.permit(:id, :name, :email, picture: [data: [:height, :width, :url, :is_silhouette]])
+    params.require(:user).permit(:id, :name, :email, picture: [data: [:height, :width, :url, :is_silhouette]])
   end
 
   def user_params
