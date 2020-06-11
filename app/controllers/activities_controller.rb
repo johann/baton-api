@@ -50,6 +50,12 @@ class ActivitiesController < ApiController
     @activity.destroy
   end
 
+  def search
+    query = params[:q]
+    # TODO: Use time to filter these
+    @activities = Activity.search_activity(query)
+  end
+
   private
 
   def set_activity

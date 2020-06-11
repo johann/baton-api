@@ -37,5 +37,6 @@ module Baton
     config.middleware.use ActionDispatch::Flash
     config.middleware.use ActionDispatch::Cookies
     config.middleware.use ActionDispatch::Session::CookieStore
+    config.active_record.schema_format = :sql
   end
 end

@@ -14,6 +14,7 @@ Rails.application.routes.draw do
     post "users/facebook", to: "users#facebook"
 
     get "activities/discover", to: "activities#discover"
+    get "activities/search", to: "activities#search"
     get "groups/discover", to: "groups#discover"
 
     resources :groups do
