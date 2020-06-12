@@ -9,7 +9,7 @@ class Activity < ApplicationRecord
   default_scope { order(start_date: :desc) }
   enum intensity: [:leisure, :fitness, :competitiveness]
   pg_search_scope :search_activity,
-                  against: { title: 'A', description: 'B' },
+                  against: { title: 'A', description: 'B', location: 'C' },
                   using: {
                     tsearch: {
                       dictionary: 'english', tsvector_column: 'searchable'
