@@ -136,7 +136,8 @@ CREATE TABLE public.activities (
     end_date timestamp without time zone,
     distance character varying,
     intensity integer,
-    searchable tsvector GENERATED ALWAYS AS (((setweight(to_tsvector('english'::regconfig, (COALESCE(title, ''::character varying))::text), 'A'::"char") || setweight(to_tsvector('english'::regconfig, (COALESCE(description, ''::character varying))::text), 'B'::"char")) || setweight(to_tsvector('english'::regconfig, (COALESCE(location, ''::character varying))::text), 'C'::"char"))) STORED
+    searchable tsvector GENERATED ALWAYS AS (((setweight(to_tsvector('english'::regconfig, (COALESCE(title, ''::character varying))::text), 'A'::"char") || setweight(to_tsvector('english'::regconfig, (COALESCE(description, ''::character varying))::text), 'B'::"char")) || setweight(to_tsvector('english'::regconfig, (COALESCE(location, ''::character varying))::text), 'C'::"char"))) STORED,
+    tsv tsvector
 );
 
 
@@ -609,10 +610,10 @@ CREATE INDEX index_activities_on_group_id ON public.activities USING btree (grou
 
 
 --
--- Name: index_activities_on_searchable; Type: INDEX; Schema: public; Owner: -
+-- Name: index_activities_on_tsv; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_activities_on_searchable ON public.activities USING gin (searchable);
+CREATE INDEX index_activities_on_tsv ON public.activities USING gin (tsv);
 
 
 --
@@ -676,6 +677,13 @@ CREATE UNIQUE INDEX index_users_on_email ON public.users USING btree (email);
 --
 
 CREATE UNIQUE INDEX index_users_on_reset_password_token ON public.users USING btree (reset_password_token);
+
+
+--
+-- Name: activities tsvectorupdate; Type: TRIGGER; Schema: public; Owner: -
+--
+
+CREATE TRIGGER tsvectorupdate BEFORE INSERT OR UPDATE ON public.activities FOR EACH ROW EXECUTE FUNCTION tsvector_update_trigger('tsv', 'pg_catalog.english', 'location', 'description', 'title');
 
 
 --
@@ -763,6 +771,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20200402194131'),
 ('20200428044808'),
 ('20200611174409'),
-('20200611174618');
+('20200611174618'),
+('20200615183328');
 
 
