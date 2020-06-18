@@ -7,7 +7,8 @@ class User < ApplicationRecord
 
   attr_accessor :skip_password_validation
 
-  validates :username, uniqueness: { case_sensitive: false }, presence: true, allow_blank: false, format: { with: /\A[a-zA-Z0-9]+\z/ }
+  # TODO Remove
+  # validates :username, uniqueness: { case_sensitive: false }, presence: true, allow_blank: false, format: { with: /\A[a-zA-Z0-9]+\z/ }
   has_many :attendances
   has_many :activities, -> { distinct }, through: :attendances
   has_many :memberships
