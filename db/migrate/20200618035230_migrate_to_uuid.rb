@@ -26,71 +26,99 @@ class MigrateToUuid < ActiveRecord::Migration[5.2]
 
     execute <<-SQL
       UPDATE activities SET group_uuid = groups.uuid
-      FROM groups WHERE groups.user_id = groups.id
+      FROM groups WHERE activities.group_id = groups.id
     SQL
 
     execute <<-SQL
       UPDATE attendances SET user_uuid = users.uuid
-      FROM users INNER JOIN activities ON users.activity_id=activities.activity_id
+      FROM users WHERE attendances.user_id = users.id 
     SQL
 
     execute <<-SQL
       UPDATE attendances SET activity_uuid = activities.uuid
-      FROM users INNER JOIN activities ON users.activity_id=activities.activity_id
+      FROM activities WHERE attendances.activity_id = activities.id 
     SQL
 
     execute <<-SQL
       UPDATE memberships SET user_uuid = users.uuid
-      FROM users INNER JOIN groups ON users.group_id=groups.group_id
+      FROM users WHERE memberships.user_id = users.id
     SQL
 
     execute <<-SQL
       UPDATE memberships SET group_uuid = groups.uuid
-      FROM users INNER JOIN groups ON users.group_id=groups.group_id
+      FROM groups WHERE memberships.group_id = groups.id
     SQL
 
-    # change_column_null :groups, :user_uuid, false
-    # change_column_null :activities, :group_uuid, false
-
-    # remove_column :groups, :user_id
-    # remove_column :activities, :group_id
-    # rename_column :groups, :user_uuid, :user_id
-    # rename_column :activities, :group_uuid, :group_id
-
-    # add_index :groups, :user_id
-    # add_foreign_key :groups, :users
-
-    # add_index :activities, :group_id
-    # add_foreign_key :activities, :groups
-
-    # remove_column :users, :id
-    # remove_column :groups, :id
-    # remove_column :activities, :id
+    change_column_null :groups, :user_uuid, false
+    change_column_null :activities, :group_uuid, false
   
-    # rename_column :users, :uuid, :id
-    # rename_column :groups, :uuid, :id
-    # rename_column :activities, :uuid, :id
+    change_column_null :memberships, :user_uuid, false
+    change_column_null :memberships, :group_uuid, false
 
-    # execute "ALTER TABLE users    ADD PRIMARY KEY (id);"
-    # execute "ALTER TABLE groups ADD PRIMARY KEY (id);"
-    # execute "ALTER TABLE activities ADD PRIMARY KEY (id);"
+    change_column_null :attendances, :activity_uuid, false
+    change_column_null :attendances, :user_uuid, false
 
-    # add_index :users, :created_at
-    # add_index :groups, :created_at
-    # add_index :activities, :created_at
+
+    remove_column :groups, :user_id
+    remove_column :activities, :group_id
+  
+    remove_column :memberships, :user_id
+    remove_column :memberships, :group_id
+    remove_column :attendances, :user_id
+    remove_column :attendances, :activity_id
+  
+    rename_column :groups, :user_uuid, :user_id
+    rename_column :activities, :group_uuid, :group_id
+  
+    rename_column :memberships, :group_uuid, :group_id
+    rename_column :memberships, :user_uuid, :user_id
+    rename_column :attendances, :activity_uuid, :activity_id
+    rename_column :attendances, :user_uuid, :user_id
+
+    add_index :groups, :user_id
+    add_foreign_key :groups, :users
+
+    add_index :activities, :group_id
+    add_foreign_key :activities, :groups
+
+    add_index :memberships, :user_id
+    add_foreign_key :memberships, :users
+
+    add_index :memberships, :group_id
+    add_foreign_key :memberships, :groups
+
+    add_index :attendances, :user_id
+    add_foreign_key :attendances, :users
+
+    add_index :memberships, :activity_id
+    add_foreign_key :memberships, :activities
+
+    remove_column :users, :id
+    remove_column :groups, :id
+    remove_column :activities, :id
+    remove_column :memberships, :id
+    remove_column :attendances, :id
+
+    rename_column :users, :uuid, :id
+    rename_column :groups, :uuid, :id
+    rename_column :activities, :uuid, :id
+    rename_column :memberships, :uuid, :id
+    rename_column :attendances, :uuid, :id
+
+    execute "ALTER TABLE users    ADD PRIMARY KEY (id);"
+    execute "ALTER TABLE groups ADD PRIMARY KEY (id);"
+    execute "ALTER TABLE activities ADD PRIMARY KEY (id);"
+    execute "ALTER TABLE memberships ADD PRIMARY KEY (id);"
+    execute "ALTER TABLE attendances ADD PRIMARY KEY (id);"
+
+    add_index :users, :created_at
+    add_index :groups, :created_at
+    add_index :activities, :created_at
+    add_index :attendances, :created_at
+    add_index :membership, :created_at
   end
 
   def down
     raise ActiveRecord::IrreversibleMigration
   end
 end
-
-
-# create_table "attendances", force: :cascade do |t|
-#   t.bigint "activity_id"
-#   t.bigint "user_id"
-#   t.datetime "created_at", null: false
-#   t.datetime "updated_at", null: false
-#   t.index ["activity_id"], name: "index_attendances_on_activity_id"
-#   t.index ["user_id"], name: "index_attendances_on_user_id"
-# end
