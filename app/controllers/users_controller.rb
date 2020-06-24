@@ -29,10 +29,9 @@ class UsersController < ApiController
   end
 
   # TODO: Remove
-  # def username
-  #   @user = User.find_by(username: params[:username])
-  #   render :show
-  # end
+  def username
+    @user = User.find(params[:user_id])
+  end
 
   private
 
