@@ -105,7 +105,7 @@ class MigrateToUuid < ActiveRecord::Migration[5.2]
     rename_column :memberships, :uuid, :id
     rename_column :attendances, :uuid, :id
 
-    execute "ALTER TABLE users    ADD PRIMARY KEY (id);"
+    execute "ALTER TABLE users ADD PRIMARY KEY (id);"
     execute "ALTER TABLE groups ADD PRIMARY KEY (id);"
     execute "ALTER TABLE activities ADD PRIMARY KEY (id);"
     execute "ALTER TABLE memberships ADD PRIMARY KEY (id);"
