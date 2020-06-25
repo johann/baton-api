@@ -10,7 +10,7 @@ Rails.application.routes.draw do
     devise_for :users, controllers: { sessions: :sessions },
                         path_names: { sign_in: :login }
     resource :user, only: [:show, :update]
-    get "users/:username", to: "users#username", as: :user_username
+    get "users/:user_id", to: "users#username"
     post "users/facebook", to: "users#facebook"
 
     get "activities/discover", to: "activities#discover"
@@ -28,7 +28,7 @@ Rails.application.routes.draw do
       resources :groups
     end
 
-    resources :users, param: :username do
+    resources :users, param: :id do
       member do
         resources :groups, controller: "users/groups"
         resources :activities, controller: "users/activities"

@@ -6,6 +6,6 @@ class Users::GroupsController < ApiController
   end
 
   private def set_user
-    @user = User.find_by(username: params[:username])
+    @user = User.find(params[:id])
   end
 end
