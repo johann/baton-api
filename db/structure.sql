@@ -150,13 +150,11 @@ ALTER SEQUENCE public.active_storage_blobs_id_seq OWNED BY public.active_storage
 --
 
 CREATE TABLE public.activities (
-    id bigint NOT NULL,
     title character varying,
     description character varying,
     lat numeric,
     long numeric,
     additional_info character varying,
-    group_id bigint,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
     start_date timestamp without time zone,
@@ -164,30 +162,10 @@ CREATE TABLE public.activities (
     end_date timestamp without time zone,
     distance character varying,
     intensity integer,
-    searchable tsvector GENERATED ALWAYS AS (((setweight(to_tsvector('english'::regconfig, (COALESCE(title, ''::character varying))::text), 'A'::"char") || setweight(to_tsvector('english'::regconfig, (COALESCE(description, ''::character varying))::text), 'B'::"char")) || setweight(to_tsvector('english'::regconfig, (COALESCE(location, ''::character varying))::text), 'C'::"char"))) STORED,
     tsv tsvector,
-    uuid uuid DEFAULT public.uuid_generate_v4() NOT NULL,
-    group_uuid uuid
+    id uuid DEFAULT public.uuid_generate_v4() NOT NULL,
+    group_id uuid NOT NULL
 );
-
-
---
--- Name: activities_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE public.activities_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: activities_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE public.activities_id_seq OWNED BY public.activities.id;
 
 
 --
@@ -232,8 +210,8 @@ ALTER SEQUENCE public.admin_users_id_seq OWNED BY public.admin_users.id;
 CREATE TABLE public.ar_internal_metadata (
     key character varying NOT NULL,
     value character varying,
-    created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
 );
 
 
@@ -242,34 +220,12 @@ CREATE TABLE public.ar_internal_metadata (
 --
 
 CREATE TABLE public.attendances (
-    id bigint NOT NULL,
-    activity_id bigint,
-    user_id bigint,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
-    uuid uuid DEFAULT public.uuid_generate_v4() NOT NULL,
-    activity_uuid uuid,
-    user_uuid uuid
+    id uuid DEFAULT public.uuid_generate_v4() NOT NULL,
+    activity_id uuid NOT NULL,
+    user_id uuid NOT NULL
 );
-
-
---
--- Name: attendances_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE public.attendances_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: attendances_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE public.attendances_id_seq OWNED BY public.attendances.id;
 
 
 --
@@ -308,37 +264,16 @@ ALTER SEQUENCE public.clients_id_seq OWNED BY public.clients.id;
 --
 
 CREATE TABLE public.groups (
-    id bigint NOT NULL,
     name text,
     description text,
     lat numeric,
     long numeric,
-    user_id bigint,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
     location character varying,
-    uuid uuid DEFAULT public.uuid_generate_v4() NOT NULL,
-    user_uuid uuid
+    id uuid DEFAULT public.uuid_generate_v4() NOT NULL,
+    user_id uuid NOT NULL
 );
-
-
---
--- Name: groups_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE public.groups_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: groups_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE public.groups_id_seq OWNED BY public.groups.id;
 
 
 --
@@ -346,34 +281,12 @@ ALTER SEQUENCE public.groups_id_seq OWNED BY public.groups.id;
 --
 
 CREATE TABLE public.memberships (
-    id bigint NOT NULL,
-    user_id bigint,
-    group_id bigint,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
-    uuid uuid DEFAULT public.uuid_generate_v4() NOT NULL,
-    group_uuid uuid,
-    user_uuid uuid
+    id uuid DEFAULT public.uuid_generate_v4() NOT NULL,
+    group_id uuid NOT NULL,
+    user_id uuid NOT NULL
 );
-
-
---
--- Name: memberships_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE public.memberships_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: memberships_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE public.memberships_id_seq OWNED BY public.memberships.id;
 
 
 --
@@ -390,7 +303,6 @@ CREATE TABLE public.schema_migrations (
 --
 
 CREATE TABLE public.users (
-    id bigint NOT NULL,
     email character varying DEFAULT ''::character varying NOT NULL,
     encrypted_password character varying DEFAULT ''::character varying NOT NULL,
     reset_password_token character varying,
@@ -410,27 +322,8 @@ CREATE TABLE public.users (
     full_name character varying,
     facebook_linked boolean DEFAULT false,
     facebook_data jsonb DEFAULT '"{}"'::jsonb,
-    uuid uuid DEFAULT public.uuid_generate_v4() NOT NULL
+    id uuid DEFAULT public.uuid_generate_v4() NOT NULL
 );
-
-
---
--- Name: users_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE public.users_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: users_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE public.users_id_seq OWNED BY public.users.id;
 
 
 --
@@ -455,13 +348,6 @@ ALTER TABLE ONLY public.active_storage_blobs ALTER COLUMN id SET DEFAULT nextval
 
 
 --
--- Name: activities id; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.activities ALTER COLUMN id SET DEFAULT nextval('public.activities_id_seq'::regclass);
-
-
---
 -- Name: admin_users id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -469,38 +355,10 @@ ALTER TABLE ONLY public.admin_users ALTER COLUMN id SET DEFAULT nextval('public.
 
 
 --
--- Name: attendances id; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.attendances ALTER COLUMN id SET DEFAULT nextval('public.attendances_id_seq'::regclass);
-
-
---
 -- Name: clients id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.clients ALTER COLUMN id SET DEFAULT nextval('public.clients_id_seq'::regclass);
-
-
---
--- Name: groups id; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.groups ALTER COLUMN id SET DEFAULT nextval('public.groups_id_seq'::regclass);
-
-
---
--- Name: memberships id; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.memberships ALTER COLUMN id SET DEFAULT nextval('public.memberships_id_seq'::regclass);
-
-
---
--- Name: users id; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.users ALTER COLUMN id SET DEFAULT nextval('public.users_id_seq'::regclass);
 
 
 --
@@ -642,10 +500,10 @@ CREATE UNIQUE INDEX index_active_storage_blobs_on_key ON public.active_storage_b
 
 
 --
--- Name: index_activities_on_group_id; Type: INDEX; Schema: public; Owner: -
+-- Name: index_activities_on_created_at; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_activities_on_group_id ON public.activities USING btree (group_id);
+CREATE INDEX index_activities_on_created_at ON public.activities USING btree (created_at);
 
 
 --
@@ -670,38 +528,31 @@ CREATE UNIQUE INDEX index_admin_users_on_reset_password_token ON public.admin_us
 
 
 --
--- Name: index_attendances_on_activity_id; Type: INDEX; Schema: public; Owner: -
+-- Name: index_attendances_on_created_at; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_attendances_on_activity_id ON public.attendances USING btree (activity_id);
-
-
---
--- Name: index_attendances_on_user_id; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_attendances_on_user_id ON public.attendances USING btree (user_id);
+CREATE INDEX index_attendances_on_created_at ON public.attendances USING btree (created_at);
 
 
 --
--- Name: index_groups_on_user_id; Type: INDEX; Schema: public; Owner: -
+-- Name: index_groups_on_created_at; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_groups_on_user_id ON public.groups USING btree (user_id);
-
-
---
--- Name: index_memberships_on_group_id; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_memberships_on_group_id ON public.memberships USING btree (group_id);
+CREATE INDEX index_groups_on_created_at ON public.groups USING btree (created_at);
 
 
 --
--- Name: index_memberships_on_user_id; Type: INDEX; Schema: public; Owner: -
+-- Name: index_memberships_on_created_at; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_memberships_on_user_id ON public.memberships USING btree (user_id);
+CREATE INDEX index_memberships_on_created_at ON public.memberships USING btree (created_at);
+
+
+--
+-- Name: index_users_on_created_at; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_users_on_created_at ON public.users USING btree (created_at);
 
 
 --
@@ -723,54 +574,6 @@ CREATE UNIQUE INDEX index_users_on_reset_password_token ON public.users USING bt
 --
 
 CREATE TRIGGER tsvectorupdate BEFORE INSERT OR UPDATE ON public.activities FOR EACH ROW EXECUTE FUNCTION tsvector_update_trigger('tsv', 'pg_catalog.english', 'location', 'description', 'title');
-
-
---
--- Name: attendances fk_rails_3064bf8cfd; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.attendances
-    ADD CONSTRAINT fk_rails_3064bf8cfd FOREIGN KEY (activity_id) REFERENCES public.activities(id);
-
-
---
--- Name: groups fk_rails_5e78cd340a; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.groups
-    ADD CONSTRAINT fk_rails_5e78cd340a FOREIGN KEY (user_id) REFERENCES public.users(id);
-
-
---
--- Name: attendances fk_rails_77ad02f5c5; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.attendances
-    ADD CONSTRAINT fk_rails_77ad02f5c5 FOREIGN KEY (user_id) REFERENCES public.users(id);
-
-
---
--- Name: memberships fk_rails_99326fb65d; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.memberships
-    ADD CONSTRAINT fk_rails_99326fb65d FOREIGN KEY (user_id) REFERENCES public.users(id);
-
-
---
--- Name: activities fk_rails_a272b68366; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.activities
-    ADD CONSTRAINT fk_rails_a272b68366 FOREIGN KEY (group_id) REFERENCES public.groups(id);
-
-
---
--- Name: memberships fk_rails_aaf389f138; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.memberships
-    ADD CONSTRAINT fk_rails_aaf389f138 FOREIGN KEY (group_id) REFERENCES public.groups(id);
 
 
 --
@@ -808,10 +611,11 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20191113234441'),
 ('20191216051838'),
 ('20200402194131'),
-('20200428044808'),
 ('20200611174409'),
 ('20200611174618'),
 ('20200615183328'),
-('20200618035230');
+('20200618035230'),
+('20200625013105'),
+('20200625013243');
 
 
