@@ -9,6 +9,34 @@ SET xmloption = content;
 SET client_min_messages = warning;
 SET row_security = off;
 
+--
+-- Name: pgcrypto; Type: EXTENSION; Schema: -; Owner: -
+--
+
+CREATE EXTENSION IF NOT EXISTS pgcrypto WITH SCHEMA public;
+
+
+--
+-- Name: EXTENSION pgcrypto; Type: COMMENT; Schema: -; Owner: -
+--
+
+COMMENT ON EXTENSION pgcrypto IS 'cryptographic functions';
+
+
+--
+-- Name: uuid-ossp; Type: EXTENSION; Schema: -; Owner: -
+--
+
+CREATE EXTENSION IF NOT EXISTS "uuid-ossp" WITH SCHEMA public;
+
+
+--
+-- Name: EXTENSION "uuid-ossp"; Type: COMMENT; Schema: -; Owner: -
+--
+
+COMMENT ON EXTENSION "uuid-ossp" IS 'generate universally unique identifiers (UUIDs)';
+
+
 SET default_tablespace = '';
 
 SET default_table_access_method = heap;
@@ -136,7 +164,10 @@ CREATE TABLE public.activities (
     end_date timestamp without time zone,
     distance character varying,
     intensity integer,
-    searchable tsvector GENERATED ALWAYS AS ((setweight(to_tsvector('english'::regconfig, (COALESCE(title, ''::character varying))::text), 'A'::"char") || setweight(to_tsvector('english'::regconfig, (COALESCE(description, ''::character varying))::text), 'B'::"char"))) STORED
+    searchable tsvector GENERATED ALWAYS AS (((setweight(to_tsvector('english'::regconfig, (COALESCE(title, ''::character varying))::text), 'A'::"char") || setweight(to_tsvector('english'::regconfig, (COALESCE(description, ''::character varying))::text), 'B'::"char")) || setweight(to_tsvector('english'::regconfig, (COALESCE(location, ''::character varying))::text), 'C'::"char"))) STORED,
+    tsv tsvector,
+    uuid uuid DEFAULT public.uuid_generate_v4() NOT NULL,
+    group_uuid uuid
 );
 
 
@@ -215,7 +246,10 @@ CREATE TABLE public.attendances (
     activity_id bigint,
     user_id bigint,
     created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
+    updated_at timestamp without time zone NOT NULL,
+    uuid uuid DEFAULT public.uuid_generate_v4() NOT NULL,
+    activity_uuid uuid,
+    user_uuid uuid
 );
 
 
@@ -282,7 +316,9 @@ CREATE TABLE public.groups (
     user_id bigint,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
-    location character varying
+    location character varying,
+    uuid uuid DEFAULT public.uuid_generate_v4() NOT NULL,
+    user_uuid uuid
 );
 
 
@@ -314,7 +350,10 @@ CREATE TABLE public.memberships (
     user_id bigint,
     group_id bigint,
     created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
+    updated_at timestamp without time zone NOT NULL,
+    uuid uuid DEFAULT public.uuid_generate_v4() NOT NULL,
+    group_uuid uuid,
+    user_uuid uuid
 );
 
 
@@ -370,7 +409,8 @@ CREATE TABLE public.users (
     admin boolean,
     full_name character varying,
     facebook_linked boolean DEFAULT false,
-    facebook_data jsonb DEFAULT '"{}"'::jsonb
+    facebook_data jsonb DEFAULT '"{}"'::jsonb,
+    uuid uuid DEFAULT public.uuid_generate_v4() NOT NULL
 );
 
 
@@ -609,10 +649,10 @@ CREATE INDEX index_activities_on_group_id ON public.activities USING btree (grou
 
 
 --
--- Name: index_activities_on_searchable; Type: INDEX; Schema: public; Owner: -
+-- Name: index_activities_on_tsv; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_activities_on_searchable ON public.activities USING gin (searchable);
+CREATE INDEX index_activities_on_tsv ON public.activities USING gin (tsv);
 
 
 --
@@ -676,6 +716,13 @@ CREATE UNIQUE INDEX index_users_on_email ON public.users USING btree (email);
 --
 
 CREATE UNIQUE INDEX index_users_on_reset_password_token ON public.users USING btree (reset_password_token);
+
+
+--
+-- Name: activities tsvectorupdate; Type: TRIGGER; Schema: public; Owner: -
+--
+
+CREATE TRIGGER tsvectorupdate BEFORE INSERT OR UPDATE ON public.activities FOR EACH ROW EXECUTE FUNCTION tsvector_update_trigger('tsv', 'pg_catalog.english', 'location', 'description', 'title');
 
 
 --
@@ -763,6 +810,8 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20200402194131'),
 ('20200428044808'),
 ('20200611174409'),
-('20200611174618');
+('20200611174618'),
+('20200615183328'),
+('20200618035230');
 
 
