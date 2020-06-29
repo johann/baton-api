@@ -1,6 +1,7 @@
 class ActivitiesController < ApiController
   before_action :set_activity, only: [:show, :update, :destroy]
   before_action :authenticate_coach, only: [:create, :update, :destroy]
+  skip_before_action :authenticate_user, only: [:show]
 
   def index
     if params[:scope] == "past"

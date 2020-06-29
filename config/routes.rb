@@ -15,6 +15,7 @@ Rails.application.routes.draw do
 
     get "activities/discover", to: "activities#discover"
     get "activities/search", to: "activities#search"
+    get "activities/:id", to: "activities#show"
     get "groups/discover", to: "groups#discover"
 
     resources :groups do
