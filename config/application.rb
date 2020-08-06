@@ -38,5 +38,9 @@ module Baton
     config.middleware.use ActionDispatch::Cookies
     config.middleware.use ActionDispatch::Session::CookieStore
     config.active_record.schema_format = :sql
+
+    Raven.configure do |config|
+      config.dsn = 'https://0bce969e71f04878b56b6930a255e76d:46478d76c59f4633a5c0b7d6070f9043@o430909.ingest.sentry.io/5380510'
+    end
   end
 end

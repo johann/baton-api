@@ -61,3 +61,4 @@ gem 'rswag'
 gem 'faker', :require => false
 gem 'bootstrap', '~> 4.4.1'
 gem 'webpacker'
+gem "sentry-raven"
