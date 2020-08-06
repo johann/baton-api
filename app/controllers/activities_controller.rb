@@ -53,8 +53,7 @@ class ActivitiesController < ApiController
 
   def search
     query = params[:q]
-    # TODO: Use time to filter these
-    @activities = Activity.search_activity(query)
+    @activities = Activity.search_activity(query).where(start_date: Date.today..12.months.from_now).order(:start_date)
   end
 
   private
