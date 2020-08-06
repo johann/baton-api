@@ -48,6 +48,7 @@ class ActivitiesController < ApiController
   end
 
   def destroy
+    # TODO: Notify all users attached activity
     @activity.destroy
   end
 

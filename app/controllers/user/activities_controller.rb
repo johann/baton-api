@@ -1,7 +1,7 @@
 class User::ActivitiesController < ApiController
   def index
     if params[:scope] == "past"
-      @activities = current_user.activities.where(start_date: 12.months.ago..1.day.ago).order(:start_date)
+      @activities = current_user.activities.where(start_date: 12.months.ago..1.day.ago).order(:start_date).sort_by(&:start_date)
     elsif params[:scope] == "future"
       @activities = current_user.activities.where(start_date: Date.today..12.months.from_now).order(:start_date)
     else
