@@ -29,6 +29,10 @@ Rails.application.routes.draw do
       resources :groups
     end
 
+    resources :coaches do
+      resources :activities, controller: "coaches/activities"
+    end
+
     resources :users, param: :id do
       member do
         resources :groups, controller: "users/groups"

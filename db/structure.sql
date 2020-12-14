@@ -322,7 +322,8 @@ CREATE TABLE public.users (
     full_name character varying,
     facebook_linked boolean DEFAULT false,
     facebook_data jsonb DEFAULT '"{}"'::jsonb,
-    id uuid DEFAULT public.uuid_generate_v4() NOT NULL
+    id uuid DEFAULT public.uuid_generate_v4() NOT NULL,
+    persona character varying
 );
 
 
@@ -616,6 +617,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20200615183328'),
 ('20200618035230'),
 ('20200625013105'),
-('20200625013243');
+('20200625013243'),
+('20200806153137');
 
 
