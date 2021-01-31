@@ -1,0 +1,1 @@
+json.array! @coaches, partial: "coaches/user", as: :user

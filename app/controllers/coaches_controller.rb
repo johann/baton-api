@@ -9,6 +9,14 @@ class CoachesController < ApiController
     @coaches = groups_without_current_user.map { |group| group.coach }
   end
 
+  def discover
+    user_activities = current_user.activities.map(&:id)
+    coach_activities = current_user.coach_groups.map {|group| group.activities }.flatten.map(&:id)
+    activities = user_activities + coach_activities
+    @activities = Activity.where.not(id: activities).where(start_date: Date.today..5.days.from_now).order(:start_date)
+    @coaches = @activities.map { |a| a.group.coach }.uniq
+  end
+
   def show
     begin
       @user = User.find(params[:id])
