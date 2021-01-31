@@ -9,7 +9,7 @@ class GroupsController < ApiController
     @group = Group.new(group_params)
     if @group.save
       if params[:group][:photo].present?
-        @group.photo.attach(data: params[:group][:photo])
+        @group.photo.attach(data: params[:group][:photo], filename: "groups/#{@group.id}")
       end
       render :show, status: :created, location: @group
     else
@@ -20,7 +20,7 @@ class GroupsController < ApiController
   def update
     if @group.update_attributes(group_params)
       if params[:group][:photo].present?
-        @group.photo.attach(data: params[:group][:photo])
+        @group.photo.attach(data: params[:group][:photo], filename: "groups/#{@group.id}")
       end
       render :show
     else

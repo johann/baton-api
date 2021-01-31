@@ -8,7 +8,7 @@ class UsersController < ApiController
   def update
     if current_user.update_attributes(user_params)
       if params[:user][:photo].present?
-        current_user.photo.attach(data: params[:user][:photo])
+        current_user.photo.attach(data: params[:user][:photo], filename: "users/#{current_user.id}")
       end
       render :show
     else
