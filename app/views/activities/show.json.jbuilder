@@ -4,6 +4,7 @@ if @activity.photo.attached?
 else
   json.photo @activity.placeholder
 end
+# why do we have a limit
 json.members @activity.users.limit(5).map do |user|
   json.partial! 'users/user', locals: { user: user }
 end
@@ -24,3 +25,4 @@ json.group do
       json.partial! 'users/user', locals: { user: user }
   end
 end
+json.is_attending @activity.member?(current_user)
