@@ -60,7 +60,7 @@ class ActivitiesController < ApiController
   private
 
   def set_currently_viewing_user
-    @currently_viewing_user = current_viewing_user
+    @currently_viewing_user = currently_viewing_user
   end
 
   def set_activity
