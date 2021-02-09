@@ -25,4 +25,6 @@ json.group do
       json.partial! 'users/user', locals: { user: user }
   end
 end
-json.is_attending @activity.member?(current_user)
+if @currently_viewing_user
+  json.is_attending @activity.member?(current_user)
+end

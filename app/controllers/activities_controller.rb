@@ -1,6 +1,7 @@
 class ActivitiesController < ApiController
   before_action :set_activity, only: [:show, :update, :destroy]
   before_action :authenticate_coach, only: [:create, :update, :destroy]
+  before_action :set_currently_viewing_user, only: [:show]
   skip_before_action :authenticate_user, only: [:show]
 
   def index
@@ -48,7 +49,6 @@ class ActivitiesController < ApiController
   end
 
   def destroy
-    # TODO: Notify all users attached activity
     @activity.destroy
   end
 
@@ -58,6 +58,10 @@ class ActivitiesController < ApiController
   end
 
   private
+
+  def set_currently_viewing_user
+    @currently_viewing_user = current_viewing_user
+  end
 
   def set_activity
     @activity = Activity.find(params[:id])

@@ -24,6 +24,21 @@ class ApiController < ActionController::API
     end
   end
 
+  def currently_viewing_user
+    if request.headers['Authorization'].present?
+      authenticate_or_request_with_http_token do |token|
+        begin
+          jwt_payload = JWT.decode(token, ENV["SECRET_KEY_BASE"]).first
+          @current_user_id = jwt_payload['id']
+          return true
+        rescue JWT::ExpiredSignature, JWT::VerificationError, JWT::DecodeError
+          head :unauthorized
+        end
+      end
+    end
+    return nil
+  end
+
   def authenticate_coach
     head :unathorized unless current_user.coach?
   end

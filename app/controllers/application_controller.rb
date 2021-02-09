@@ -15,6 +15,8 @@ class ApplicationController < ActionController::Base
   end
 
   def authenticate_user
+    # when you're coming from react web this should not exist 
+    # but when coming from app it should exist
     if request.headers['Authorization'].present?
       authenticate_or_request_with_http_token do |token|
         begin
