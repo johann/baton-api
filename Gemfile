@@ -65,3 +65,4 @@ gem "sentry-raven"
 gem 'oj'
 gem 'faraday'
 gem 'faraday_middleware'
+gem 'fog-aws'

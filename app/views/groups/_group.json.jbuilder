@@ -2,8 +2,8 @@ json.extract! group, :id, :name, :description, :lat, :long, :location, :user_id,
 json.coach do
   json.partial! 'users/user', user: group.coach
 end
-if group.photo.attached?
-  json.photo group.photo.service_url.sub(/\?.*/, '')
+if group.photo_url
+  json.photo group.photo_url
 else
   json.photo group.placeholder
 end

@@ -33,4 +33,8 @@ class User < ApplicationRecord
     super
   end
 
+  def photo_url
+    Aws::Client.new.send_file("users/#{id}")
+  end
+
 end

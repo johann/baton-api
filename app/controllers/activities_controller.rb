@@ -26,7 +26,11 @@ class ActivitiesController < ApiController
     @activity.group_id = params[:group_id]
     if @activity.save
       if params[:activity][:photo].present?
-        @activity.photo.attach(data: params[:activity][:photo], filename: "activites/#{@activity.id}")
+        data = params[:activity][:photo]
+        UploadPhoto.call(activity: "activites/#{@activity.id}", data: data).tap do |c|
+          raise c.error if c.failure?
+          @photo_url = c.url
+        end
       end
       render json: @activity
     else
@@ -41,7 +45,11 @@ class ActivitiesController < ApiController
   def update
     if @activity.update(activity_params)
       if params[:activity][:photo].present?
-        @activity.photo.attach(data: params[:activity][:photo], filename: "activites/#{@activity.id}")
+        data = params[:activity][:photo]
+        UploadPhoto.call(activity: "activites/#{@activity.id}", data: data).tap do |c|
+          raise c.error if c.failure?
+          @photo_url = c.url
+        end
       end
       Activities::NotifyUsers.call(activity: @activity, updated: true).tap do |c|
         raise c.error if c.failure?

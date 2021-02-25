@@ -9,7 +9,11 @@ class GroupsController < ApiController
     @group = Group.new(group_params)
     if @group.save
       if params[:group][:photo].present?
-        @group.photo.attach(data: params[:group][:photo], filename: "groups/#{@group.id}")
+        data = params[:group][:photo]
+        UploadPhoto.call(activity: "groups/#{@group.id}", data: data).tap do |c|
+          raise c.error if c.failure?
+          @photo_url = c.url
+        end
       end
       render :show, status: :created, location: @group
     else
@@ -20,7 +24,11 @@ class GroupsController < ApiController
   def update
     if @group.update_attributes(group_params)
       if params[:group][:photo].present?
-        @group.photo.attach(data: params[:group][:photo], filename: "groups/#{@group.id}")
+        data = params[:group][:photo]
+        UploadPhoto.call(activity: "groups/#{@group.id}", data: data).tap do |c|
+          raise c.error if c.failure?
+          @photo_url = c.url
+        end
       end
       render :show
     else

@@ -13,4 +13,8 @@ class Group < ApplicationRecord
   def placeholder
     "https://batonapprunner.s3.amazonaws.com/group-and-activity-image-placeholder.png"
   end
+
+  def photo_url
+    Aws::Client.new.send_file("groups/#{id}")
+  end
 end

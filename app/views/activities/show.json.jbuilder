@@ -1,8 +1,8 @@
 json.extract! @activity, :id, :title, :description, :lat, :long, :location, :additional_info, :start_date, :end_date, :created_at, :updated_at, :distance, :intensity
-if @activity.photo.attached?
-  json.photo @activity.photo.service_url.sub(/\?.*/, '')
+if activity.photo_url
+  json.photo activity.photo_url
 else
-  json.photo @activity.placeholder
+  json.photo activity.placeholder
 end
 # why do we have a limit 
 # make a db constraint for this
@@ -17,10 +17,10 @@ json.group do
   json.coach do
       json.partial! 'users/user', user: @activity.group.coach
   end
-  if @activity.group.photo.attached?
-    json.photo @activity.group.photo.service_url.sub(/\?.*/, '')
+  if activity.photo_url
+    json.photo activity.photo_url
   else
-    json.photo @activity.group.placeholder
+    json.photo activity.placeholder
   end
   json.members @activity.group.users.limit(5).map do |user|
       json.partial! 'users/user', locals: { user: user }
