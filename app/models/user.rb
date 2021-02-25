@@ -34,7 +34,7 @@ class User < ApplicationRecord
   end
 
   def photo_url
-    c = GetPhoto.call(activity: "users/#{id}")
+    c = GetPhoto.call(filename: "users/#{id}")
     c.url
   end
 

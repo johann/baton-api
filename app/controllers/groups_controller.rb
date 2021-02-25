@@ -10,7 +10,7 @@ class GroupsController < ApiController
     if @group.save
       if params[:group][:photo].present?
         data = params[:group][:photo]
-        UploadPhoto.call(activity: "groups/#{@group.id}", data: data).tap do |c|
+        UploadPhoto.call(filename: "groups/#{@group.id}", data: data).tap do |c|
           raise c.error if c.failure?
           @photo_url = c.url
         end
@@ -25,7 +25,7 @@ class GroupsController < ApiController
     if @group.update_attributes(group_params)
       if params[:group][:photo].present?
         data = params[:group][:photo]
-        UploadPhoto.call(activity: "groups/#{@group.id}", data: data).tap do |c|
+        UploadPhoto.call(filename: "groups/#{@group.id}", data: data).tap do |c|
           raise c.error if c.failure?
           @photo_url = c.url
         end

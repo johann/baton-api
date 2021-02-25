@@ -27,7 +27,7 @@ class ActivitiesController < ApiController
     if @activity.save
       if params[:activity][:photo].present?
         data = params[:activity][:photo]
-        UploadPhoto.call(activity: "activites/#{@activity.id}", data: data).tap do |c|
+        UploadPhoto.call(filename: "activities/#{@activity.id}", data: data).tap do |c|
           raise c.error if c.failure?
           @photo_url = c.url
         end
@@ -46,7 +46,7 @@ class ActivitiesController < ApiController
     if @activity.update(activity_params)
       if params[:activity][:photo].present?
         data = params[:activity][:photo]
-        UploadPhoto.call(activity: "activites/#{@activity.id}", data: data).tap do |c|
+        UploadPhoto.call(filename: "activities/#{@activity.id}", data: data).tap do |c|
           raise c.error if c.failure?
           @photo_url = c.url
         end
