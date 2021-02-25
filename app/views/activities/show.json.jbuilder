@@ -4,8 +4,9 @@ if @activity.photo.attached?
 else
   json.photo @activity.placeholder
 end
-# why do we have a limit
-json.members @activity.users.limit(5).map do |user|
+# why do we have a limit 
+# make a db constraint for this
+json.members @activity.users.map do |user|
   json.partial! 'users/user', locals: { user: user }
 end
 json.coach do

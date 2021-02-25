@@ -1,5 +1,5 @@
 class ActivitiesController < ApiController
-  before_action :set_activity, only: [:show, :update, :destroy]
+  before_action :set_activity, only: [:show, :update, :destroy, :members]
   before_action :authenticate_coach, only: [:create, :update, :destroy]
   before_action :set_currently_viewing_user, only: [:show]
   skip_before_action :authenticate_user, only: [:show]
@@ -35,12 +35,16 @@ class ActivitiesController < ApiController
   end
 
   def show
+    
   end
 
   def update
     if @activity.update(activity_params)
       if params[:activity][:photo].present?
         @activity.photo.attach(data: params[:activity][:photo], filename: "activites/#{@activity.id}")
+      end
+      Activities::NotifyUsers.call(activity: @activity, updated: true).tap do |c|
+        raise c.error if c.failure?
       end
       render json: @activity
     else
@@ -50,6 +54,13 @@ class ActivitiesController < ApiController
 
   def destroy
     @activity.destroy
+    Activities::NotifyUsers.call(activity: @activity, cancelled: true).tap do |c|
+      raise c.error if c.failure?
+    end
+  end
+
+  def members
+    @members = @activity.users
   end
 
   def search
