@@ -17,10 +17,10 @@ json.group do
   json.coach do
       json.partial! 'users/user', user: @activity.group.coach
   end
-  if activity.photo_url
-    json.photo activity.photo_url
+  if @activity.photo_url
+    json.photo @activity.photo_url
   else
-    json.photo activity.placeholder
+    json.photo @activity.placeholder
   end
   json.members @activity.group.users.limit(5).map do |user|
       json.partial! 'users/user', locals: { user: user }
