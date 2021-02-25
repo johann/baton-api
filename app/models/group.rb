@@ -15,6 +15,7 @@ class Group < ApplicationRecord
   end
 
   def photo_url
-    Aws::Client.new.send_file("groups/#{id}")
+    c = GetPhoto.call(activity: "groups/#{id}")
+    c.url
   end
 end

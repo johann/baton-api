@@ -34,7 +34,8 @@ class User < ApplicationRecord
   end
 
   def photo_url
-    Aws::Client.new.send_file("users/#{id}")
+    c = GetPhoto.call(activity: "users/#{id}")
+    c.url
   end
 
 end

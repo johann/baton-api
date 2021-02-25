@@ -38,6 +38,7 @@ class Activity < ApplicationRecord
   end
 
   def photo_url
-    Aws::Client.new.send_file("activities/#{id}")
+    c = GetPhoto.call(activity: "activities/#{id}")
+    c.url
   end
 end
