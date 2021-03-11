@@ -41,7 +41,7 @@ module Baton
 
     config.middleware.insert_before 0, Rack::Cors do
       allow do
-         origins 'batonapp.vercel.app'
+         origins '*'
          resource '*', :headers => :any, :methods => [:get, :post, :options]
        end
     end
