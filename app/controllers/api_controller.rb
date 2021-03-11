@@ -32,7 +32,7 @@ class ApiController < ActionController::API
           @current_user_id = jwt_payload['id']
           return true
         rescue JWT::ExpiredSignature, JWT::VerificationError, JWT::DecodeError
-          head :unauthorized
+          return nil
         end
       end
     end
