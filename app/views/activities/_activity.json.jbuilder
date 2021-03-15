@@ -12,6 +12,5 @@ json.coach do
 end
 json.is_attending activity.member?(current_user)
 json.group do
-  # REMOVE
   json.partial! 'groups/group', group: activity.group
 end
