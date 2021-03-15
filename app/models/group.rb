@@ -15,7 +15,8 @@ class Group < ApplicationRecord
   end
 
   def photo_url
-    c = GetPhoto.call(filename: "groups/#{id}")
-    c.url
+    "https://baton-app-images.s3.amazonaws.com/groups/#{id}"
+    # c = GetPhoto.call(filename: "groups/#{id}")
+    # c.url
   end
 end
