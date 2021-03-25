@@ -38,8 +38,10 @@ class Activity < ApplicationRecord
   end
 
   def photo_url
-    "https://baton-app-images.s3.amazonaws.com/activities/#{id}"
-    # c = GetPhoto.call(filename: "activities/#{id}")
-    # c.url
+    if photo_attached
+      "https://baton-app-images.s3.amazonaws.com/activities/#{id}"
+    else
+      placeholder
+    end
   end
 end

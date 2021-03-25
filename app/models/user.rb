@@ -34,9 +34,11 @@ class User < ApplicationRecord
   end
 
   def photo_url
-    "https://baton-app-images.s3.amazonaws.com/users/#{id}"
-    # c = GetPhoto.call(filename: "users/#{id}")
-    # c.url
+    if photo_attached
+      "https://baton-app-images.s3.amazonaws.com/users/#{id}"
+    else
+      placeholder
+    end
   end
 
 end

@@ -15,8 +15,10 @@ class Group < ApplicationRecord
   end
 
   def photo_url
-    "https://baton-app-images.s3.amazonaws.com/groups/#{id}"
-    # c = GetPhoto.call(filename: "groups/#{id}")
-    # c.url
+    if photo_attached
+      "https://baton-app-images.s3.amazonaws.com/groups/#{id}"
+    else
+      placeholder
+    end
   end
 end

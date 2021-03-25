@@ -164,7 +164,8 @@ CREATE TABLE public.activities (
     intensity integer,
     tsv tsvector,
     id uuid DEFAULT public.uuid_generate_v4() NOT NULL,
-    group_id uuid NOT NULL
+    group_id uuid NOT NULL,
+    photo_attached boolean
 );
 
 
@@ -272,7 +273,8 @@ CREATE TABLE public.groups (
     updated_at timestamp without time zone NOT NULL,
     location character varying,
     id uuid DEFAULT public.uuid_generate_v4() NOT NULL,
-    user_id uuid NOT NULL
+    user_id uuid NOT NULL,
+    photo_attached boolean
 );
 
 
@@ -323,7 +325,8 @@ CREATE TABLE public.users (
     facebook_linked boolean DEFAULT false,
     facebook_data jsonb DEFAULT '"{}"'::jsonb,
     id uuid DEFAULT public.uuid_generate_v4() NOT NULL,
-    persona character varying
+    persona character varying,
+    photo_attached boolean
 );
 
 
@@ -618,6 +621,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20200618035230'),
 ('20200625013105'),
 ('20200625013243'),
-('20200806153137');
+('20200806153137'),
+('20210315213823');
 
 

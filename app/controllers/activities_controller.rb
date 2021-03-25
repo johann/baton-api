@@ -29,7 +29,7 @@ class ActivitiesController < ApiController
         data = params[:activity][:photo]
         UploadPhoto.call(filename: "activities/#{@activity.id}", data: data).tap do |c|
           raise c.error if c.failure?
-          @photo_url = c.url
+          @activity.update(photo_attached: true)
         end
       end
       render json: @activity
@@ -48,7 +48,7 @@ class ActivitiesController < ApiController
         data = params[:activity][:photo]
         UploadPhoto.call(filename: "activities/#{@activity.id}", data: data).tap do |c|
           raise c.error if c.failure?
-          @photo_url = c.url
+          @activity.update(photo_attached: true)
         end
       end
       Activities::NotifyUsers.call(activity: @activity, updated: true).tap do |c|

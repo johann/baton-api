@@ -41,6 +41,7 @@ class ApplicationController < ActionController::Base
   def signed_in?
     @current_user_id.present?
   end
+
   # def underscore_params!
   #   params.deep_transform_keys!(&:underscore)
   # end
