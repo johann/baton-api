@@ -25,6 +25,9 @@ class ActivitiesController < ApiController
     @activity = Activity.new(activity_params)
     @activity.group_id = params[:group_id]
     if @activity.save
+      CreateLink.call(activity: @activity).tap do |c|
+        raise c.error if c.failure?
+      end
       if params[:activity][:photo].present?
         data = params[:activity][:photo]
         UploadPhoto.call(filename: "activities/#{@activity.id}", data: data).tap do |c|

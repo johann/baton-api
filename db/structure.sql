@@ -165,7 +165,8 @@ CREATE TABLE public.activities (
     tsv tsvector,
     id uuid DEFAULT public.uuid_generate_v4() NOT NULL,
     group_id uuid NOT NULL,
-    photo_attached boolean
+    photo_attached boolean,
+    short_link character varying
 );
 
 
@@ -622,6 +623,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20200625013105'),
 ('20200625013243'),
 ('20200806153137'),
-('20210315213823');
+('20210315213823'),
+('20210407192105');
 
 

@@ -12,7 +12,7 @@ module DynamicLink
       req = request(params: 
       {
         "dynamicLinkInfo": {
-          "domainUriPrefix": "baton-e55ff.firebaseapp.com",
+          "domainUriPrefix": "batonapp.page.link",
           "link": url,
           "androidInfo": {
             "androidPackageName": "com.open.baton"
@@ -23,7 +23,11 @@ module DynamicLink
         }
       }
       )
-      req
+      if req["shortLink"]
+        req["shortLink"]
+      else
+        req
+      end
     end
 
     private
@@ -35,7 +39,7 @@ module DynamicLink
       end
     end
 
-    def request(params: {})a
+    def request(params: {})
       response = client.post("", params.to_json)
       Oj.load(response.body)
     end
