@@ -25,7 +25,7 @@ class ActivitiesController < ApiController
     @activity = Activity.new(activity_params)
     @activity.group_id = params[:group_id]
     if @activity.save
-      CreateLink.call(activity: @activity).tap do |c|
+      Activities::CreateLink.call(activity: @activity).tap do |c|
         raise c.error if c.failure?
       end
       if params[:activity][:photo].present?
