@@ -6,7 +6,7 @@ module Activities
 
     def call
       activity = context.activity
-      client = OneSignal::Client.new
+      client = DynamicLink::Client.new
       short_link = client.create_link(activity.id)
       activity.update(short_link: short_link)
     end
