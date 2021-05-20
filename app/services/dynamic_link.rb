@@ -7,8 +7,8 @@ module DynamicLink
     def initialize
     end
 
-    def create_link(link)
-      url = "https://web-blond.vercel.app/activities/#{link}"
+    def create_link(activity)
+      url = "https://web-blond.vercel.app/activities/#{activity.id}"
       req = request(params: 
       {
         "dynamicLinkInfo": {
@@ -19,6 +19,11 @@ module DynamicLink
           },
           "iosInfo": {
             "iosBundleId": "com.open.baton"
+          },
+          "socialMetaTagInfo": {
+            "socialTitle": activity.title,
+            "socialDescription": activity.description,
+            "socialImageLink": activity.photo
           }
         }
       }
