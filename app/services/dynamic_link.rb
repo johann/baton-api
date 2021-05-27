@@ -23,7 +23,7 @@ module DynamicLink
           "socialMetaTagInfo": {
             "socialTitle": activity.title,
             "socialDescription": activity.description,
-            "socialImageLink": activity.photo
+            "socialImageLink": activity.photo_url
           }
         }
       }
