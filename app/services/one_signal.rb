@@ -5,7 +5,7 @@ module OneSignal
 
     attr_reader :token
 
-    def initialize(token = "ODczNTJjNmItZmE4MC00YTlmLTkwMDctNTFiZmMxZjA5ODg1")
+    def initialize(token = ENV['ONE_SIGNAL_KEY'])
       @token = token
     end
 

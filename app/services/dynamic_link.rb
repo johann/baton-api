@@ -1,6 +1,6 @@
 module DynamicLink
   class Client
-    API_ENDPOINT = "https://firebasedynamiclinks.googleapis.com/v1/shortLinks?key=AIzaSyAfz5AmOLpSy7oKe-xVyUb8-JaS3T8-T9E".freeze
+    API_ENDPOINT = "https://firebasedynamiclinks.googleapis.com/v1/shortLinks?key=".freeze
 
     attr_reader :token
 
@@ -37,7 +37,8 @@ module DynamicLink
 
     private
     def client 
-      @_client ||= Faraday.new(API_ENDPOINT) do |client| 
+      endpoint = API_ENDPOINT + ENV['DYNAMIC_LINK_KEY']
+      @_client ||= Faraday.new(endpoint) do |client|
         client.request :url_encoded
         client.adapter Faraday.default_adapter
         client.headers['Content-Type'] = "application/json"
