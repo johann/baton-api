@@ -6,9 +6,9 @@ class ActivitiesController < ApiController
 
   def index
     if params[:scope] == "past"
-      @activities = Activity.where(group_id: params[:group_id], start_date: 12.months.ago..1.day.ago).limit(20).sort_by(&:start_date)
+      @activities = Activity.where(group_id: params[:group_id], start_date: 12.months.ago..DateTime.now).limit(20).sort_by(&:start_date)
     elsif params[:scope] == "future"
-      @activities = Activity.where(group_id: params[:group_id], start_date: Date.today..12.months.from_now).order(:start_date)
+      @activities = Activity.where(group_id: params[:group_id], start_date: DateTime.now..12.months.from_now).order(:start_date)
     else
       @activities = Activity.where(group_id: params[:group_id])
     end
