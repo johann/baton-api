@@ -35,6 +35,9 @@ class ActivitiesController < ApiController
           @activity.update(photo_attached: true)
         end
       end
+      Activities::NotifyUsers.call(activity: @activity, created: true).tap do |c|
+        raise c.error if c.failure?
+      end
       render json: @activity
     else
       render json: @activity.errors, status: :unprocessable_entity
