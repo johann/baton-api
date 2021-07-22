@@ -1,4 +1,4 @@
-json.extract! group, :id, :name, :description, :lat, :long, :location, :user_id, :created_at, :updated_at
+json.extract! group, :id, :name, :description, :lat, :long, :location, :created_at, :updated_at
 # keep as coach so as not to break api
 json.head_coach do
   json.partial! 'users/user', user: group.head_coach
