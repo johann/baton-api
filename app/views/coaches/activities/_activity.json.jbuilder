@@ -5,7 +5,7 @@ json.members activity.users.limit(5).map do |user|
   json.partial! 'users/user', locals: { user: user }
 end
 json.coach do
-  json.partial! 'users/user', user: activity.group.coach
+  json.partial! 'users/user', user: activity.coach
 end
 json.is_attending activity.member?(current_user)
 json.group do
