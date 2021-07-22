@@ -4,9 +4,9 @@ class CoachesController < ApiController
   def index
     current_user_groups = current_user.user_groups
     groups_without_current_user = Group.all.reject do |group|
-      current_user_groups.include?(group) || group.coach == current_user
+      current_user_groups.include?(group) || group.head_coach == current_user
     end
-    @coaches = groups_without_current_user.map { |group| group.coach }
+    @coaches = groups_without_current_user.map { |group| group.head_coach }
   end
 
   def discover
@@ -14,7 +14,7 @@ class CoachesController < ApiController
     coach_activities = current_user.coach_groups.map {|group| group.activities }.flatten.map(&:id)
     activities = user_activities + coach_activities
     @activities = Activity.where.not(id: activities).where(start_date: Date.today..5.days.from_now).order(:start_date)
-    @coaches = @activities.map { |a| a.group.coach }.uniq
+    @coaches = @activities.map { |a| a.group.head_coach }.uniq
   end
 
   def show

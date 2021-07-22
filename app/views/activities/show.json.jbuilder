@@ -7,12 +7,12 @@ json.members @activity.users.map do |user|
   json.partial! 'users/user', locals: { user: user }
 end
 json.coach do
-  json.partial! 'users/user', user: @activity.group.coach
+  json.partial! 'users/user', user: @activity.coach
 end
 json.group do
   json.extract! @activity.group, :id, :name, :description, :lat, :long, :location, :user_id, :created_at, :updated_at
   json.coach do
-      json.partial! 'users/user', user: @activity.group.coach
+      json.partial! 'users/user', user: @activity.coach
   end
   json.photo @activity.group.photo_url
   json.members @activity.group.users.limit(5).map do |user|
