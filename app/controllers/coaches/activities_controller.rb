@@ -2,7 +2,7 @@ class Coaches::ActivitiesController < ApiController
   def index
     begin
       @user = User.find(params[:coach_id])
-      head :not_found unless @user.coach?
+      head :not_found unless @user.is_coach?
       
       @groups = @user.coach_groups
       @activities = @groups.flat_map do |group|

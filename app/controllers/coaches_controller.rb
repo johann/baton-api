@@ -2,7 +2,7 @@ class CoachesController < ApiController
   # before_action :set_group, only: [:show, :update]
 
   def index
-    current_user_groups = current_user.groups
+    current_user_groups = current_user.user_groups
     groups_without_current_user = Group.all.reject do |group|
       current_user_groups.include?(group) || group.coach == current_user
     end

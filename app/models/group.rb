@@ -1,6 +1,6 @@
 class Group < ApplicationRecord
   include ActiveStorageSupport::SupportForBase64
-  belongs_to :coach, class_name: "User", foreign_key: :user_id
+  # belongs_to :head_coach, class_name: "User", foreign_key: :user_id
   has_many :activities
   has_many :memberships
   has_many :users, -> { distinct }, through: :memberships
@@ -20,5 +20,14 @@ class Group < ApplicationRecord
     else
       placeholder
     end
+  end
+
+  def coaches
+    memberships.filter_map { |membership| membership.user if membership.role == 1 }
+  end
+
+  def head_coach
+    members = memberships.select { |membership| membership.role == 2 }
+    members.first.user
   end
 end

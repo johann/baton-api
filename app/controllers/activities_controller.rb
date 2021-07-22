@@ -6,11 +6,11 @@ class ActivitiesController < ApiController
 
   def index
     if params[:scope] == "past"
-      @activities = Activity.where(group_id: params[:group_id], start_date: 12.months.ago..DateTime.now).limit(20).sort_by(&:start_date)
+      @activities = Activity.includes(:group).where(group_id: params[:group_id], start_date: 12.months.ago..DateTime.now).limit(20).sort_by(&:start_date)
     elsif params[:scope] == "future"
-      @activities = Activity.where(group_id: params[:group_id], start_date: DateTime.now..12.months.from_now).order(:start_date)
+      @activities = Activity.includes(:group).where(group_id: params[:group_id], start_date: DateTime.now..12.months.from_now).order(:start_date)
     else
-      @activities = Activity.where(group_id: params[:group_id])
+      @activities = Activity.includes(:group).where(group_id: params[:group_id])
     end
   end
 
@@ -18,21 +18,22 @@ class ActivitiesController < ApiController
     user_activities = current_user.activities.map(&:id)
     coach_activities = current_user.coach_groups.map {|group| group.activities }.flatten.map(&:id)
     activities = user_activities + coach_activities
-    @activities = Activity.where.not(id: activities).where(start_date: Date.today..12.months.from_now).order(:start_date)
+    @activities = Activity.includes(:group).where.not(id: activities).where(start_date: Date.today..12.months.from_now).order(:start_date)
   end
 
   def create
     @activity = Activity.new(activity_params)
     @activity.group_id = params[:group_id]
+    @activity.user_id = current_user.id
     if @activity.save
-      Activities::CreateLink.call(activity: @activity).tap do |c|
-        raise c.error if c.failure?
-      end
       if params[:activity][:photo].present?
         data = params[:activity][:photo]
         UploadPhoto.call(filename: "activities/#{@activity.id}", data: data).tap do |c|
           raise c.error if c.failure?
           @activity.update(photo_attached: true)
+        end
+        Activities::CreateLink.call(activity: @activity).tap do |c|
+          raise c.error if c.failure?
         end
       end
       Activities::NotifyUsers.call(activity: @activity, created: true).tap do |c|

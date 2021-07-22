@@ -2,7 +2,7 @@ class Users::GroupsController < ApiController
   before_action :set_user
 
   def index
-    @groups = @user.groups
+    @groups = @user.user_groups
   end
 
   private def set_user

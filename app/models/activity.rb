@@ -2,6 +2,7 @@ class Activity < ApplicationRecord
   include ActiveStorageSupport::SupportForBase64
   include PgSearch::Model
   belongs_to :group
+  belongs_to :coach, class_name: "User", foreign_key: :user_id
   has_many :attendances
   has_many :users, -> { distinct }, through: :attendances
 

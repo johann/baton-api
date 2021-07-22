@@ -4,8 +4,8 @@ json.photo activity.photo_url
 json.members activity.users.limit(5).map do |user|
   json.partial! 'users/user', locals: { user: user }
 end
-json.coach do
-  json.partial! 'users/user', user: activity.group.coach
+json.head_coach do
+  json.partial! 'users/user', user: activity.group.head_coach
 end
 json.is_attending activity.member?(current_user)
 json.group do

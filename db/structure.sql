@@ -166,7 +166,8 @@ CREATE TABLE public.activities (
     id uuid DEFAULT public.uuid_generate_v4() NOT NULL,
     group_id uuid NOT NULL,
     photo_attached boolean,
-    short_link character varying
+    short_link character varying,
+    user_id bigint
 );
 
 
@@ -288,7 +289,8 @@ CREATE TABLE public.memberships (
     updated_at timestamp without time zone NOT NULL,
     id uuid DEFAULT public.uuid_generate_v4() NOT NULL,
     group_id uuid NOT NULL,
-    user_id uuid NOT NULL
+    user_id uuid NOT NULL,
+    role integer DEFAULT 0
 );
 
 
@@ -519,6 +521,13 @@ CREATE INDEX index_activities_on_tsv ON public.activities USING gin (tsv);
 
 
 --
+-- Name: index_activities_on_user_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_activities_on_user_id ON public.activities USING btree (user_id);
+
+
+--
 -- Name: index_admin_users_on_email; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -624,6 +633,8 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20200625013243'),
 ('20200806153137'),
 ('20210315213823'),
-('20210407192105');
+('20210407192105'),
+('20210713200648'),
+('20210722154308');
 
 

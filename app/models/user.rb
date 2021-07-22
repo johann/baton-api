@@ -13,10 +13,10 @@ class User < ApplicationRecord
   has_many :activities, -> { distinct }, through: :attendances
   has_many :memberships
   has_many :groups, -> { distinct }, through: :memberships
-  has_many :coach_groups, :foreign_key => "user_id", :class_name => "Group"
+  # has_many :coach_groups, :foreign_key => "user_id", :class_name => "Group"
+  has_many :coach_activities, :foreign_key => "user_id", :class_name => "Activity"
   # has_one_attached :photo
   has_one_base64_attached :photo
-
 
   def generate_jwt
     JWT.encode({ id: id,
@@ -38,6 +38,26 @@ class User < ApplicationRecord
       "https://baton-app-images.s3.amazonaws.com/users/#{id}"
     else
       placeholder
+    end
+  end
+
+  def is_coach?
+    groups.any? do |group|
+      group.memberships.any? do |membership|
+        membership.role == 2 || membership.role == 1
+      end
+    end
+  end
+
+  def coach_groups
+    memberships.filter_map do |membership|
+      return membership.group if membership.role == 2 || membership.role == 1
+    end
+  end
+
+  def user_groups
+    memberships.filter_map do |membership|
+      return membership.group if membership.role == 0
     end
   end
 

@@ -1,10 +1,10 @@
 class User::GroupsController < ApiController
   def index
-    @groups = current_user.groups
+    @groups = current_user.user_groups
   end
 
   def create
-    head(:bad_request) && return unless current_user.groups.exclude?(Group.find(params[:group_id]))
+    head(:bad_request) && return unless current_user.user_groups.exclude?(Group.find(params[:group_id]))
     @membership = Membership.new(user_id: current_user.id, group_id: params[:group_id])
     if @membership.save
       head :ok

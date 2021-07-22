@@ -4,13 +4,12 @@ Rails.application.routes.draw do
   mount Rswag::Api::Engine => '/api-docs'
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
-  # resources :clients
 
   scope :api, defaults: { format: :json } do
     devise_for :users, controllers: { sessions: :sessions },
                         path_names: { sign_in: :login }
     resource :user, only: [:show, :update]
-    get "users/:user_id", to: "users#username"
+    get "users/:user_id", to: "users#username" # remove
     post "users/facebook", to: "users#facebook"
 
     get "activities/discover", to: "activities#discover"
