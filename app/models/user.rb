@@ -51,13 +51,13 @@ class User < ApplicationRecord
 
   def coach_groups
     memberships.filter_map do |membership|
-      return membership.group if membership.role == 2 || membership.role == 1
+      membership.group if membership.role == 2 || membership.role == 1
     end
   end
 
   def user_groups
     memberships.filter_map do |membership|
-      return membership.group if membership.role == 0
+      membership.group if membership.role == 0
     end
   end
 
