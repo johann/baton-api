@@ -20,7 +20,7 @@ class CoachesController < ApiController
   def show
     begin
       @user = User.find(params[:id])
-      head :not_found unless @user.coach?
+      head :not_found unless @user.is_coach?
     rescue ActiveRecord::RecordNotFound
       head :not_found
     end
