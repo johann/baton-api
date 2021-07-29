@@ -16,8 +16,10 @@ class ActivitiesController < ApiController
 
   def discover
     user_activities = current_user.activities.map(&:id)
-    coach_activities = current_user.coach_groups.map {|group| group.activities }.flatten.map(&:id)
-    activities = user_activities + coach_activities
+    coach_groups = current_user.coach_groups
+    coach_activities = coach_groups.map {|group| group.activities }
+    flattened_activities = coach_activities.flatten.map(&:id)
+    activities = user_activities + flattened_activities
     @activities = Activity.includes(:group).where.not(id: activities).where(start_date: Date.today..12.months.from_now).order(:start_date)
   end
 
