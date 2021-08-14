@@ -1,3 +1,3 @@
 ActiveAdmin.register Membership do
-  permit_params :group_id, :user_id
+  permit_params :group_id, :user_id, :role
 end
