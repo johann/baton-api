@@ -9,8 +9,6 @@ class UsersController < ApiController
     if current_user.update_attributes(user_params)
       if params[:user][:photo].present?
         data = params[:user][:photo]
-        current_user.photo = current_user.photo_url
-        current_user.save
         UploadPhoto.call(filename: "users/#{current_user.id}", data: data).tap do |c|
           raise c.error if c.failure?
           current_user.update(photo_attached: true)

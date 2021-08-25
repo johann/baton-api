@@ -30,4 +30,7 @@ class Group < ApplicationRecord
     members = memberships.select { |membership| membership.role == 2 }
     members.first.user
   end
+
+  def members
+  end
 end
