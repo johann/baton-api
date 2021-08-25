@@ -6,7 +6,7 @@ json.array! @activities do |activity|
     json.partial! 'users/user', locals: { user: user }
   end
   json.head_coach do
-    json.partial! 'users/user', user: activity.group.head_coach
+    json.partial! 'users/user', user: activity.coach
   end
   json.is_attending activity.member?(current_user)
 end
