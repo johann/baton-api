@@ -15,7 +15,7 @@ json.group do
     json.partial! 'users/user', user: @activity.coach
   end
   json.photo @activity.group.photo_url
-  json.members @activity.group.members.limit(5).map do |user|
+  json.members @activity.group.members.take(5).map do |user|
       json.partial! 'users/user', locals: { user: user }
   end
 end
