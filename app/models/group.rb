@@ -32,5 +32,6 @@ class Group < ApplicationRecord
   end
 
   def members
+    memberships.select { |membership| membership.role == 0 }
   end
 end

@@ -43,7 +43,7 @@ class GroupsController < ApiController
 
   def members
     @group = Group.find(params[:group_id])
-    @users = @group.users
+    @users = @group.members
   end
 
   def discover

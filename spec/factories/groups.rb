@@ -10,7 +10,7 @@ FactoryBot.define do
 
     trait :with_user do
       after(:create) do |group|
-        group.users << create(:user)
+        group.members << create(:user)
       end
     end
 

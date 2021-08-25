@@ -8,7 +8,7 @@ json.coaches group.coaches.map do |coach|
 end
 json.photo group.photo_url
 json.photo_attached group.photo_attached
-json.members group.users.limit(5).map do |user|
+json.members group.members.limit(5).map do |user|
   json.partial! 'users/user', locals: { user: user }
 end
 json.is_member group.member?(current_user)

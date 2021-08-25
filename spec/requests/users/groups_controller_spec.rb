@@ -34,7 +34,7 @@ describe 'Group', type: :request do
         schema type: :array, items: { properties: group_schema }
         let!(:user) { create(:user, username: 'blarf') }
         let!(:group) { create(:group, :with_user, coach: user) }
-        let!(:username) { group.users.first.username }
+        let!(:username) { group.members.first.username }
         let!(:Authorization) { "Bearer #{user.generate_jwt}" }
 
         run_test!

@@ -33,7 +33,7 @@ describe 'Group', type: :request do
         schema type: :array, items: { properties: group_schema }
         let!(:user) { create(:user, username: "blarf") }
         let!(:group) { create(:group, :with_user, coach: user) }
-        let!(:signed_user) { group.users.first }
+        let!(:signed_user) { group.members.first }
         let!(:Authorization) { "Bearer #{signed_user.generate_jwt}" }
 
         run_test!
@@ -72,7 +72,7 @@ describe 'Group', type: :request do
       response '204', 'Group deleted' do
         let!(:user) { create(:user, username: 'blarf') }
         let!(:group) { create(:group, :with_user, coach: user) }
-        let!(:signed_user) { group.users.first }
+        let!(:signed_user) { group.members.first }
         let!(:id) { group.id }
         let!(:Authorization) { "Bearer #{signed_user.generate_jwt}" }
         run_test!
