@@ -32,6 +32,6 @@ class Group < ApplicationRecord
   end
 
   def members
-    memberships.select { |membership| membership.role == 0 }
+    memberships.filter_map { |membership| membership.user if membership.role == 0 }
   end
 end
