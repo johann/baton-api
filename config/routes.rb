@@ -19,6 +19,9 @@ Rails.application.routes.draw do
     get "groups/discover", to: "groups#discover"
     get "coaches/discover", to: "coaches#discover"
 
+    post 'password/forgot', to: 'passwords#forgot'
+    post 'password/reset', to: 'passwords#reset'
+
     resources :groups do
       resources :activities do
         get "/attendance", to: "attendances#show"
