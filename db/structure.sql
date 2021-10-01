@@ -275,7 +275,6 @@ CREATE TABLE public.groups (
     updated_at timestamp without time zone NOT NULL,
     location character varying,
     id uuid DEFAULT public.uuid_generate_v4() NOT NULL,
-    user_id uuid NOT NULL,
     photo_attached boolean
 );
 
@@ -635,6 +634,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210315213823'),
 ('20210407192105'),
 ('20210713200648'),
-('20210722154308');
+('20210722154308'),
+('20211001223910');
 
 
