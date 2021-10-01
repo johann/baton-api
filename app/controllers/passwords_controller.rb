@@ -10,7 +10,7 @@ class PasswordsController < ApiController
 
     if user.present?
       user.generate_password_token!
-      # SEND EMAIL HERE
+      ForgotPasswordMailer.send_forgot_password_email(user).deliver
       render json: {status: 'ok'}, status: :ok
     else
     end
