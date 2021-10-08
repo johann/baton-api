@@ -42,10 +42,8 @@ class User < ApplicationRecord
   end
 
   def is_coach?
-    groups.any? do |group|
-      group.memberships.any? do |membership|
-        membership.role == 2 || membership.role == 1
-      end
+    memberships.any? do |membership|
+      membership.role == 2 || membership.role == 1
     end
   end
 
