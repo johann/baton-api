@@ -10,7 +10,10 @@ class PasswordsController < ApiController
 
     if user.present?
       user.generate_password_token!
-      ForgotPasswordMailer.send_forgot_password_email(user).deliver
+      Users::CreateForgotPassword.call(code: user.reset_password_token).tap do |c|
+        raise c.error if c.failure?
+        ForgotPasswordMailer.send_forgot_password_email(user, c.short_link).deliver
+      end
       render json: {status: 'ok'}, status: :ok
     else
     end
